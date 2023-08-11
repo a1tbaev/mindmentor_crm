@@ -1,10 +1,12 @@
 package kg.nsi.crm.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import kg.nsi.crm.entity.base.BaseEntity;
 import kg.nsi.crm.enums.InternStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class Intern extends BaseEntity{
     String lastName;
 
     @Column(name = "email")
+    @Email
     String email;
 
     @Column(name = "phone_number")
