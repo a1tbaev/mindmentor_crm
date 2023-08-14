@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.service.impl.StackServiceImpl;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/stack")
+@RequiredArgsConstructor
 public class StackController {
 	
-	@Autowired
-	 StackServiceImpl serviceImpl;
+	final StackServiceImpl serviceImpl;
 	
-	@PostMapping("/createStack")
+	@PostMapping("/")
 	public ResponseEntity<String> createStack(@RequestBody Stack stack){
 		serviceImpl.createStack(stack);
 		return ResponseEntity.ok("Stack created successfully!");

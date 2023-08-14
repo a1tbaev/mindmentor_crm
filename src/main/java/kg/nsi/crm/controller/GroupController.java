@@ -1,25 +1,25 @@
 package kg.nsi.crm.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import kg.nsi.crm.entity.Group;
+import kg.nsi.crm.dto.GroupDto;
+import kg.nsi.crm.results.Result;
 import kg.nsi.crm.service.impl.GroupServiceImpl;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/groups")
+@RequiredArgsConstructor
 public class GroupController {
 	
-	@Autowired
-	 GroupServiceImpl groupServiceImpl;
+	 final GroupServiceImpl groupServiceImpl;
 	
-	@PostMapping("/addGroup")
-	public ResponseEntity<Group> addGroup(@RequestBody Group group){
-		return ResponseEntity.ok(this.groupServiceImpl.addGroup(group));
+	@PostMapping("/")
+	public Result addGroup(@RequestBody GroupDto groupDto){
+		return groupServiceImpl.addGroup(groupDto);
 	}
 
 }

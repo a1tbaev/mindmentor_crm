@@ -1,7 +1,8 @@
 package kg.nsi.crm.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import kg.nsi.crm.entity.base.BaseEntity;
@@ -20,8 +21,13 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternDto extends BaseEntity{
-	
+public class InternDto{
+	Long id;
+
+    LocalDate creationDate;
+
+    LocalDate updateDate;
+
 	String firstName;
     
 	String lastName;
@@ -35,5 +41,5 @@ public class InternDto extends BaseEntity{
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
     Long groupId;
-
+   
 }

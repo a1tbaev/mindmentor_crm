@@ -1,6 +1,7 @@
-package kg.nsi.crm.dto.request;
+package kg.nsi.crm.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddRequirementRequest {
+@Builder 
+public class RequirementDto {
 	private String name;
 	private Long stackId;
 }

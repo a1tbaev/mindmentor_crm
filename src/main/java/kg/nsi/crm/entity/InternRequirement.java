@@ -27,5 +27,4 @@ public class InternRequirement extends BaseEntity {
 
     @Column(name = "is_finished")
     Boolean isFinished;
-
 }

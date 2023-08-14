@@ -1,14 +1,18 @@
 package kg.nsi.crm.service;
 
+import java.util.List;
+
 import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.entity.Intern;
+import kg.nsi.crm.results.DataResult;
+import kg.nsi.crm.results.Result;
 
 public interface InternService {
 	
-	Intern createAccount(InternDto intern);
-	Intern getInternById(Long id);
-	Intern getInternEntityById(Long id);
-	
-	void deleteInternById(Long id);
-	Intern updateIntern(InternDto intern);
+	DataResult<InternDto> createIntern(InternDto intern);
+	DataResult<InternDto> getInternById(Long id);
+	InternDto getInternEntityById(Long id);
+	DataResult<List<InternDto>> getAll();
+	Result deleteInternById(Long id);
+	DataResult<InternDto> updateIntern(InternDto intern);
 }
