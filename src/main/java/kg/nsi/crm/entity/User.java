@@ -5,6 +5,12 @@ import kg.nsi.crm.entity.base.BaseEntity;
 import kg.nsi.crm.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends BaseEntity { // implements UserDetails
+public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "username", nullable = false)
     String username;
@@ -26,5 +32,38 @@ public class User extends BaseEntity { // implements UserDetails
     @Enumerated(EnumType.STRING)
     Role role;
 
-    // need additional field for security :)
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

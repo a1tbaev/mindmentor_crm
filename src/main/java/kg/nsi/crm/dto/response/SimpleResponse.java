@@ -9,3 +9,4 @@ public record SimpleResponse (
         HttpStatus httpStatus
 ){
 }
+
