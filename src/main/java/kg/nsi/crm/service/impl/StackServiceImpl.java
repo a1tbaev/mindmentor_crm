@@ -1,12 +1,12 @@
 package kg.nsi.crm.service.impl;
 
+import kg.nsi.crm.dto.response.SimpleResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.repository.StackRepository;
-import kg.nsi.crm.repository.UserRepository;
-import kg.nsi.crm.results.DataResult;
-import kg.nsi.crm.results.SuccessDataResult;
+
 import kg.nsi.crm.service.StackService;
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +16,8 @@ public class StackServiceImpl implements StackService{
 	final StackRepository stackRepository;
 	
 	@Override
-	public DataResult<Stack> createStack(Stack stack) {
-		return new SuccessDataResult<>("Stack created!",stackRepository.save(stack));
+	public SimpleResponse createStack(Stack stack) {
+		return new SimpleResponse( "The stack created successfully", HttpStatus.OK);
 	}
 
 	@Override

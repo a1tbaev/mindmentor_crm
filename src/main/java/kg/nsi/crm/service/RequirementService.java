@@ -1,12 +1,11 @@
 package kg.nsi.crm.service;
 
 import kg.nsi.crm.dto.RequirementDto;
-import kg.nsi.crm.entity.Requirement;
-import kg.nsi.crm.results.Result;
+import kg.nsi.crm.dto.response.SimpleResponse;
 
 public interface RequirementService {
 
-	Result addRequirement(RequirementDto request);
+	SimpleResponse addRequirement(RequirementDto request);
 	RequirementDto getRequirementEntityById(Long requirementId);
 	
 }

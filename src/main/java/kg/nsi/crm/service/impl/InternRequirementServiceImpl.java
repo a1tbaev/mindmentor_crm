@@ -1,52 +1,42 @@
 package kg.nsi.crm.service.impl;
-
+import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.repository.RequirementRepository;
+import org.hibernate.sql.exec.ExecutionException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.dto.InternRequirementDto;
-import kg.nsi.crm.dto.RequirementDto;
-import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.entity.InternRequirement;
 import kg.nsi.crm.entity.Requirement;
-import kg.nsi.crm.mapper.InternMapper;
-import kg.nsi.crm.mapper.InternRequirementMapper;
-import kg.nsi.crm.mapper.RequirementMapper;
-import kg.nsi.crm.repository.GroupRepository;
 import kg.nsi.crm.repository.InternRepository;
 import kg.nsi.crm.repository.InternRequirementRepository;
-import kg.nsi.crm.results.Result;
-import kg.nsi.crm.results.SuccessDataResult;
-import kg.nsi.crm.service.GroupService;
 import kg.nsi.crm.service.InternRequirementService;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class InternRequirementServiceImpl implements InternRequirementService{
-	
-	final InternRequirementRepository internRequirementRepository;
-	final InternServiceImpl internServiceImpl;
-	final RequirementServiceImpl requirementServiceImpl;
-	final GroupServiceImpl groupServiceImpl;
+	private final InternRepository internRepository;
+	private final RequirementRepository requirementRepository;
+	private final InternRequirementRepository internRequirementRepository;
 	@Override
-	public Result addInternRequirement(InternRequirementDto internRequirementDto) {
-		
-		InternDto internDto = internServiceImpl.getInternEntityById(internRequirementDto.getInternId());
-		Group group = groupServiceImpl.getGroupEntityById(internDto.getGroupId());
-		
-		Intern intern = InternMapper.toDto(internServiceImpl.getInternEntityById(internRequirementDto.getInternId()),group);
-		RequirementDto requirementDto =  requirementServiceImpl.getRequirementEntityById(internRequirementDto.getRequirementId());
-				
-		Boolean isFinished = internRequirementDto.getIsFinished();
-		
+	public SimpleResponse addInternRequirement(InternRequirementDto internRequirementDto) {
+
+		Intern intern = internRepository.findById(internRequirementDto.getInternId()).orElseThrow(()-> new ExecutionException(""));
+
+		Requirement requirement = requirementRepository.findById(internRequirementDto.getRequirementId()).orElseThrow(()-> new ExecutionException(""));
+
 		InternRequirement internRequirement = new InternRequirement();
+
 		internRequirement.setIntern(intern);
-		internRequirement.setRequirement(RequirementMapper.toEntity(requirementDto));
-		internRequirement.setIsFinished(isFinished);
-		
+		internRequirement.setRequirement(requirement);
+		internRequirement.setIsFinished(internRequirementDto.getIsFinished());
+
 		internRequirementRepository.save(internRequirement);
-		return new SuccessDataResult<>("InternRequirement created",internRequirement);
+
+		return new SimpleResponse( "The intern-requirement created successfully", HttpStatus.OK);
+
 	}
 
 }

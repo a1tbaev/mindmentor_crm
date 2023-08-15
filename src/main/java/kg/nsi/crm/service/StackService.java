@@ -1,10 +1,10 @@
 package kg.nsi.crm.service;
 
+import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Stack;
-import kg.nsi.crm.results.DataResult;
 
 public interface StackService {
 
-	DataResult<Stack> createStack(Stack stack);
+	SimpleResponse createStack(Stack stack);
 	Stack getStackEntityById(Long stackId);
 }

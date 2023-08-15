@@ -1,5 +1,8 @@
 package kg.nsi.crm.controller;
 
+import java.util.List;
+
+import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kg.nsi.crm.dto.InternDto;
 
-import kg.nsi.crm.results.DataResult;
-import kg.nsi.crm.results.Result;
 import kg.nsi.crm.service.impl.InternServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,23 +27,27 @@ public class InternController {
 	final InternServiceImpl iServiceImpl;
 	
 	@PostMapping("/")
-	public Result createIntern(@RequestBody InternDto intern){
+	public SimpleResponse createIntern(@RequestBody InternDto intern){
 		return iServiceImpl.createIntern(intern);
 	}
 	
 	@GetMapping("/{internId}")
-    public DataResult<InternDto> getInternById(@PathVariable("internId") Long internId) {
+    public InternDto getInternById(@PathVariable("internId") Long internId) {
         return iServiceImpl.getInternById(internId);
     }
 
 	@PutMapping("/")
-	public DataResult<InternDto> updateInternInfo(@RequestBody InternDto intern){
+	public SimpleResponse updateInternInfo(@RequestBody InternDto intern){
 		return iServiceImpl.updateIntern(intern);
 		 
 	}
 	@DeleteMapping("/{internId}")
-	public Result deleteIntern(@PathVariable("internId") Long id){
+	public SimpleResponse deleteIntern(@PathVariable("internId") Long id){
 		return iServiceImpl.deleteInternById(id);
 		 
+	}
+	@GetMapping("/getAll")
+	public List<InternDto> getAll(){
+		return iServiceImpl.getAll();
 	}
 }

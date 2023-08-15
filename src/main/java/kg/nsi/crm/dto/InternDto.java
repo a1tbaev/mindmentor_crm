@@ -22,6 +22,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InternDto{
+
 	Long id;
 
     LocalDate creationDate;
@@ -40,6 +41,9 @@ public class InternDto{
     
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
+
     Long groupId;
+
+    Long stackId;
    
 }

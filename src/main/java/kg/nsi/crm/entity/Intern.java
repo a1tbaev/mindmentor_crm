@@ -6,7 +6,7 @@ import kg.nsi.crm.entity.base.BaseEntity;
 import kg.nsi.crm.enums.InternStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
+import kg.nsi.crm.entity.Stack;
 
 import java.util.List;
 

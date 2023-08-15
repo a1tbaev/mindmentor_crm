@@ -3,20 +3,17 @@ package kg.nsi.crm.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import kg.nsi.crm.dto.response.SimpleResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.mapper.InternMapper;
-import kg.nsi.crm.mapper.UserMapper;
 import kg.nsi.crm.repository.GroupRepository;
 import kg.nsi.crm.repository.InternRepository;
-import kg.nsi.crm.repository.UserRepository;
-import kg.nsi.crm.results.DataResult;
-import kg.nsi.crm.results.Result;
-import kg.nsi.crm.results.SuccessDataResult;
-import kg.nsi.crm.results.SuccessResult;
+
 import kg.nsi.crm.service.GroupService;
 import kg.nsi.crm.service.InternService;
 import lombok.AccessLevel;
@@ -33,23 +30,24 @@ public class InternServiceImpl implements InternService{
 	final GroupService groupService;
 
 	@Override
-	public DataResult<InternDto> createIntern(InternDto intern) {
+	public SimpleResponse createIntern(InternDto intern) {
 		Group group = groupService.getGroupEntityById(intern.getGroupId());	
-		return new SuccessDataResult<>("Intern created!",InternMapper.toEntity(internRepository.save(InternMapper.toDto(intern,group))));			
+		internRepository.save(InternMapper.toDto(intern,group));
+		return new SimpleResponse( "The intern created successfully", HttpStatus.OK);
 	}
 	
 	@Override
-	public DataResult<InternDto> getInternById(Long id) {
-		return new SuccessDataResult<>("Intern info:",getInternEntityById(id));				
+	public InternDto getInternById(Long id) {
+		return getInternEntityById(id);
 	}
 	
 	@Override
-	public 	Result deleteInternById(Long id) {
-		return new SuccessResult("Intern deleted!");		
+	public 	SimpleResponse deleteInternById(Long id) {
+		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
 	}
 	
 	@Override
-	public DataResult<InternDto> updateIntern(InternDto internDto) {
+	public SimpleResponse updateIntern(InternDto internDto) {
 		Intern intern = this.internRepository.getInternById(internDto.getId());
 		
 		if(internDto.getFirstName()!= null)	intern.setFirstName(internDto.getFirstName());
@@ -69,23 +67,24 @@ public class InternServiceImpl implements InternService{
 			intern.setGroup(group);
 		}	
 		internRepository.save(intern);
-		return new SuccessDataResult<>("Intern info updated!", InternMapper.toEntity(intern));				
+		return new SimpleResponse( "The mentor updated successfully", HttpStatus.OK);
 	}
 
 	@Override
 	public InternDto getInternEntityById(Long id) {
+		System.out.println("inside getInternEntityById");
 		return InternMapper.toEntity(internRepository.findById(id).orElseThrow(RuntimeException::new)); 
 	}
 	
 	
 	@Override
-	public DataResult<List<InternDto>> getAll() {
+	public List<InternDto> getAll() {
 		List<InternDto> interns = new ArrayList<>();
 		
 		for(Intern intern: internRepository.findAll()) {
 			 interns.add(InternMapper.toEntity(intern));
 		}	
-		return new SuccessDataResult<>("Interns listed",interns);
+		return interns;
 	}
 	
 
