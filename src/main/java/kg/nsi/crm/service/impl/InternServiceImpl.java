@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kg.nsi.crm.dto.response.SimpleResponse;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InternServiceImpl implements InternService{
 	
-	final InternRepository internRepository;
-	final GroupRepository groupRepository;
-	final GroupService groupService;
+	private final InternRepository internRepository;
+	private final GroupRepository groupRepository;
+	private final GroupService groupService;
 
 	@Override
 	public SimpleResponse createIntern(InternDto intern) {
@@ -70,6 +71,18 @@ public class InternServiceImpl implements InternService{
 		return new SimpleResponse( "The mentor updated successfully", HttpStatus.OK);
 	}
 
+
+
+	@Override
+	public List<InternDto> getAll(PageRequest pageRequest) {
+		List<InternDto> interns = new ArrayList<>();
+
+		for(Intern intern: internRepository.findAll(pageRequest)) {
+			interns.add(InternMapper.toEntity(intern));
+		}
+		return interns;
+	}
+
 	@Override
 	public InternDto getInternEntityById(Long id) {
 		System.out.println("inside getInternEntityById");
@@ -77,15 +90,15 @@ public class InternServiceImpl implements InternService{
 	}
 	
 	
-	@Override
-	public List<InternDto> getAll() {
-		List<InternDto> interns = new ArrayList<>();
-		
-		for(Intern intern: internRepository.findAll()) {
-			 interns.add(InternMapper.toEntity(intern));
-		}	
-		return interns;
-	}
-	
+//	@Override
+//	public List<InternDto> getAll() {
+//		List<InternDto> interns = new ArrayList<>();
+//
+//		for(Intern intern: internRepository.findAll()) {
+//			 interns.add(InternMapper.toEntity(intern));
+//		}
+//		return interns;
+//	}
+//
 
 }

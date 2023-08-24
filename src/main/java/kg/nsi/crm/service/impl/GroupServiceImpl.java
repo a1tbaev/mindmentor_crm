@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService{
 	
-	final GroupRepository groupRepository;
+	private final GroupRepository groupRepository;
 	@Override
 	public SimpleResponse addGroup(GroupDto group) {
 		groupRepository.save(GroupMapper.toDto(group));

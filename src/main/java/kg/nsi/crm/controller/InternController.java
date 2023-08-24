@@ -3,14 +3,8 @@ package kg.nsi.crm.controller;
 import java.util.List;
 
 import kg.nsi.crm.dto.response.SimpleResponse;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
 
 import kg.nsi.crm.dto.InternDto;
 
@@ -24,7 +18,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @RequestMapping("/api/v1/interns")
 public class InternController {
-	final InternServiceImpl iServiceImpl;
+	private final InternServiceImpl iServiceImpl;
 	
 	@PostMapping("/")
 	public SimpleResponse createIntern(@RequestBody InternDto intern){
@@ -47,7 +41,8 @@ public class InternController {
 		 
 	}
 	@GetMapping("/getAll")
-	public List<InternDto> getAll(){
-		return iServiceImpl.getAll();
+	public List<InternDto> getAll(@RequestParam(required = false, defaultValue = "0") int page,
+								  @RequestParam(required = false, defaultValue = "10") int size){
+		return iServiceImpl.getAll(PageRequest.of(page, size));
 	}
 }
