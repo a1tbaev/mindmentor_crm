@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StackController {
 	
-	final StackServiceImpl serviceImpl;
+	private final StackServiceImpl serviceImpl;
 	
 	@PostMapping("/")
 	public SimpleResponse createStack(@RequestBody Stack stack){

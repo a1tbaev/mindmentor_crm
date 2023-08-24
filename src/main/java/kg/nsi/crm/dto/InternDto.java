@@ -41,9 +41,5 @@ public class InternDto{
     
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
-
-    Long groupId;
-
-    Long stackId;
    
 }

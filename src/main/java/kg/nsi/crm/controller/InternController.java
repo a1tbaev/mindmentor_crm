@@ -2,6 +2,7 @@ package kg.nsi.crm.controller;
 
 import java.util.List;
 
+import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @RequestMapping("/api/v1/interns")
 public class InternController {
-	private final InternServiceImpl iServiceImpl;
+	final InternServiceImpl iServiceImpl;
 	
 	@PostMapping("/")
-	public SimpleResponse createIntern(@RequestBody InternDto intern){
+	public SimpleResponse createIntern(@RequestBody InternRequest intern){
 		return iServiceImpl.createIntern(intern);
 	}
 	

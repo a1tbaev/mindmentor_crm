@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,4 +32,6 @@ public class Group extends BaseEntity{
     @Enumerated(EnumType.STRING)
     GroupStatus groupStatus;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    List<Intern> interns;
 }
