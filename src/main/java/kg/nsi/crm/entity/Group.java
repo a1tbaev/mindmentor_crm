@@ -32,6 +32,6 @@ public class Group extends BaseEntity{
     @Enumerated(EnumType.STRING)
     GroupStatus groupStatus;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     List<Intern> interns;
 }

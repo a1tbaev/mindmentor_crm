@@ -7,4 +7,6 @@ import kg.nsi.crm.dto.response.SimpleResponse;
 public interface GroupService {
 	SimpleResponse addGroup(GroupRequest group);
 	GroupDto getGroupEntityById(Long groupId);
+	SimpleResponse delete(Long groupId);
+	SimpleResponse update(Long groupId, GroupRequest groupRequest);
 }

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserServiceImpl implements UserService {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDto getUserById(Long userId) {

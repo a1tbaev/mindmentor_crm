@@ -5,14 +5,14 @@ import java.util.List;
 import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.PageRequest;
 
 public interface InternService {
 	
-	SimpleResponse createIntern(InternRequest internRequest) throws ChangeSetPersister.NotFoundException;
+	SimpleResponse createIntern(InternRequest internRequest);
 	InternDto getInternById(Long id);
 	InternDto getInternEntityById(Long id);
-	List<InternDto> getAll();
+	List<InternDto> getAll(PageRequest pageRequest);
 	SimpleResponse deleteInternById(Long id);
 	SimpleResponse updateIntern(InternDto intern);
 }

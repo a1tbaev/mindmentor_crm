@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/requirements")
 public class RequirementController {
 	
-	final RequirementServiceImpl requirementServiceImpl;
+	private final RequirementServiceImpl requirementServiceImpl;
 
 	@PostMapping("/")
 	public SimpleResponse addRequirement(@RequestBody RequirementDto requirement){

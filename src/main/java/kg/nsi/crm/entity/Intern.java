@@ -44,4 +44,7 @@ public class Intern extends BaseEntity{
 
     @ManyToOne(cascade = CascadeType.ALL)
     Mentor mentor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Group group;
 }

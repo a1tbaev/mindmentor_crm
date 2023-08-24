@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class StackServiceImpl implements StackService{
-	final StackRepository stackRepository;
+	private final StackRepository stackRepository;
 	
 	@Override
 	public SimpleResponse createStack(Stack stack) {

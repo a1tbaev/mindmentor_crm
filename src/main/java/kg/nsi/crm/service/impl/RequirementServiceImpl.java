@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RequirementServiceImpl implements RequirementService{
 	
-	 final RequirementRepository requirementRepository;
-	 final StackRepository stackRepository;
-	 final StackService stackService;
+	 private final RequirementRepository requirementRepository;
+	 private final StackRepository stackRepository;
+	 private final StackService stackService;
 	 private RequirementMapper requirementMapper;
 	
 	@Override

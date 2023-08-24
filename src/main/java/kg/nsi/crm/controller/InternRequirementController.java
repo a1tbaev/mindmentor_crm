@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class InternRequirementController {
 
-    final InternRequirementServiceImpl internRequirementService;
+    private final InternRequirementServiceImpl internRequirementService;
 
     @PostMapping("/")
     public SimpleResponse addInternRequirement(@RequestBody InternRequirementDto internRequirement){
