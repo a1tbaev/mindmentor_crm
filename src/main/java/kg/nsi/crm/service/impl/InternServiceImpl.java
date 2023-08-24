@@ -3,18 +3,18 @@ package kg.nsi.crm.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.entity.Mentor;
+import kg.nsi.crm.repository.MentorRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import kg.nsi.crm.dto.InternDto;
-import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.mapper.InternMapper;
-import kg.nsi.crm.repository.GroupRepository;
 import kg.nsi.crm.repository.InternRepository;
 
-import kg.nsi.crm.service.GroupService;
 import kg.nsi.crm.service.InternService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +26,14 @@ import lombok.experimental.FieldDefaults;
 public class InternServiceImpl implements InternService{
 	
 	final InternRepository internRepository;
-	final GroupRepository groupRepository;
-	final GroupService groupService;
+	private final MentorRepository mentorRepository;
 
 	@Override
-	public SimpleResponse createIntern(InternDto intern) {
-		Group group = groupService.getGroupEntityById(intern.getGroupId());	
-		internRepository.save(InternMapper.toDto(intern,group));
+	public SimpleResponse createIntern(InternRequest internRequest) {
+
+		Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow();
+
+		internRepository.save(InternMapper.toDto(internRequest, mentor));
 		return new SimpleResponse( "The intern created successfully", HttpStatus.OK);
 	}
 	
@@ -47,25 +48,17 @@ public class InternServiceImpl implements InternService{
 	}
 	
 	@Override
-	public SimpleResponse updateIntern(InternDto internDto) {
-		Intern intern = this.internRepository.getInternById(internDto.getId());
+	public SimpleResponse updateIntern(InternDto internRequest) {
+		Intern intern = this.internRepository.getInternById(internRequest.getId());
 		
-		if(internDto.getFirstName()!= null)	intern.setFirstName(internDto.getFirstName());
-		if(internDto.getLastName()!=null) intern.setLastName(internDto.getLastName());
-		if(internDto.getEmail()!=null) intern.setEmail(internDto.getEmail());
-		if(internDto.getPhoneNumber()!=null) intern.setPhoneNumber(internDto.getPhoneNumber());
-		if(internDto.getIsPaid()!=null) intern.setIsPaid(internDto.getIsPaid());
-		if(internDto.getInternStatus()!=null) intern.setInternStatus(internDto.getInternStatus());
-		if(internDto.getUpdateDate()!=null) intern.setUpdateDate(internDto.getUpdateDate());
-		if(internDto.getGroupId()!=null) {
-			Group group = null;
-			try {
-				group = groupRepository.findById(internDto.getGroupId()).orElseThrow(()-> new Exception());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			intern.setGroup(group);
-		}	
+		if(internRequest.getFirstName()!= null)	intern.setFirstName(internRequest.getFirstName());
+		if(internRequest.getLastName()!=null) intern.setLastName(internRequest.getLastName());
+		if(internRequest.getEmail()!=null) intern.setEmail(internRequest.getEmail());
+		if(internRequest.getPhoneNumber()!=null) intern.setPhoneNumber(internRequest.getPhoneNumber());
+		if(internRequest.getIsPaid()!=null) intern.setIsPaid(internRequest.getIsPaid());
+		if(internRequest.getInternStatus()!=null) intern.setInternStatus(internRequest.getInternStatus());
+		if(internRequest.getUpdateDate()!=null) intern.setUpdateDate(internRequest.getUpdateDate());
+
 		internRepository.save(intern);
 		return new SimpleResponse( "The mentor updated successfully", HttpStatus.OK);
 	}

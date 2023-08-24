@@ -6,9 +6,9 @@ import kg.nsi.crm.entity.Group;
 public class GroupMapper {
 	public static Group toDto(GroupDto groupDto) {
 		return Group.builder()
-				.name(groupDto.getName())
-				.startDate(groupDto.getStartDate())
-				.groupStatus(groupDto.getGroupStatus())
+				.name(groupDto.name())
+				.startDate(groupDto.startDate())
+				.groupStatus(groupDto.groupStatus())
 				.build();
 	}
 

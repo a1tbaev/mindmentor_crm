@@ -2,6 +2,7 @@ package kg.nsi.crm.controller;
 
 import java.util.List;
 
+import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class InternController {
 	final InternServiceImpl iServiceImpl;
 	
 	@PostMapping("/")
-	public SimpleResponse createIntern(@RequestBody InternDto intern){
+	public SimpleResponse createIntern(@RequestBody InternRequest intern){
 		return iServiceImpl.createIntern(intern);
 	}
 	

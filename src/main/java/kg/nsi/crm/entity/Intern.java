@@ -6,7 +6,6 @@ import kg.nsi.crm.entity.base.BaseEntity;
 import kg.nsi.crm.enums.InternStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import kg.nsi.crm.entity.Stack;
 
 import java.util.List;
 
@@ -40,11 +39,9 @@ public class Intern extends BaseEntity{
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
 
-    @ManyToOne
-    @JoinColumn(columnDefinition = "group_id",
-            referencedColumnName = "id")
-    Group group;
-
     @OneToMany(mappedBy = "intern")
     List<InternRequirement> requirements;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Mentor mentor;
 }

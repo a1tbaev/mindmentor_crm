@@ -1,24 +1,22 @@
 package kg.nsi.crm.mapper;
 
 import kg.nsi.crm.dto.InternDto;
-import kg.nsi.crm.entity.Group;
+import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.entity.Intern;
-import kg.nsi.crm.service.impl.GroupServiceImpl;
-import kg.nsi.crm.service.impl.StackServiceImpl;
-import lombok.RequiredArgsConstructor;
+import kg.nsi.crm.entity.Mentor;
 
 public class InternMapper {
 
 	
-	public static Intern toDto(InternDto intern, Group group) {
+	public static Intern toDto(InternRequest intern, Mentor mentor) {
 		return Intern.builder()
-				.firstName(intern.getFirstName())
-				.lastName(intern.getLastName())
-				.email(intern.getEmail())
-				.phoneNumber(intern.getPhoneNumber())
-				.isPaid(intern.getIsPaid())
-				.internStatus(intern.getInternStatus())
-				.group(group)
+				.firstName(intern.name())
+				.lastName(intern.surname())
+				.email(intern.email())
+				.phoneNumber(intern.phoneNumber())
+				.isPaid(intern.isPaid())
+				.internStatus(intern.internStatus())
+				.mentor(mentor)
 				.build();
 	}
 	
@@ -33,7 +31,6 @@ public class InternMapper {
 				.phoneNumber(intern.getPhoneNumber())
 				.isPaid(intern.getIsPaid())
 				.internStatus(intern.getInternStatus())
-				.groupId(intern.getGroup().getId())
 				.build();
 	}
 }
