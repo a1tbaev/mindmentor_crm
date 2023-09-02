@@ -19,7 +19,7 @@ public class Vendor extends BaseEntity {
     @SequenceGenerator(name = "vendor_gen", sequenceName = "vendor_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendor_gen")
-    private Long id;
+    Long id;
 
     @Column(name = "name")
     String name;

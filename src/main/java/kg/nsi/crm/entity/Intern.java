@@ -22,7 +22,7 @@ public class Intern extends BaseEntity{
     @SequenceGenerator(name = "intern_gen", sequenceName = "intern_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intern_gen")
-    private Long id;
+    Long id;
 
     @Column(name = "first_name")
     String firstName;

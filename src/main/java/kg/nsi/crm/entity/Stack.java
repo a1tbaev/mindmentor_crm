@@ -22,7 +22,7 @@ public class Stack extends BaseEntity {
     @SequenceGenerator(name = "stack_gen", sequenceName = "stack_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stack_gen")
-    private Long id;
+    Long id;
 
     @Column(name = "name", nullable = false)
     String name;

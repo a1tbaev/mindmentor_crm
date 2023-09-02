@@ -19,7 +19,7 @@ public class InternRequirement extends BaseEntity {
     @SequenceGenerator(name = "intern_requirement_gen", sequenceName = "intern_requirement_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intern_requirement_gen")
-    private Long id;
+    Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(columnDefinition = "intern_id",
