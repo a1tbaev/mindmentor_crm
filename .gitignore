@@ -32,6 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/application-kutman.properties
-src/main/resources/application-adil's.properties
 
+*.properties
+!application.properties
