@@ -19,7 +19,7 @@ public class Requirement extends BaseEntity {
     @SequenceGenerator(name = "requirement_gen", sequenceName = "requirement_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "requirement_gen")
-    private Long id;
+    Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(columnDefinition = "stack_id",
