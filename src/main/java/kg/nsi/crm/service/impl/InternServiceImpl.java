@@ -10,15 +10,10 @@ import kg.nsi.crm.repository.MentorRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import kg.nsi.crm.dto.InternDto;
-import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.mapper.InternMapper;
-import kg.nsi.crm.repository.GroupRepository;
 import kg.nsi.crm.repository.InternRepository;
-
-import kg.nsi.crm.service.GroupService;
 import kg.nsi.crm.service.InternService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +25,6 @@ import lombok.experimental.FieldDefaults;
 public class InternServiceImpl implements InternService{
 	
 	private final InternRepository internRepository;
-	private final GroupRepository groupRepository;
-	private final GroupService groupService;
 	private final MentorRepository mentorRepository;
 
 	@Override
@@ -86,17 +79,5 @@ public class InternServiceImpl implements InternService{
 		System.out.println("inside getInternEntityById");
 		return InternMapper.toEntity(internRepository.findById(id).orElseThrow(RuntimeException::new));
 	}
-
-
-//	@Override
-//	public List<InternDto> getAll() {
-//		List<InternDto> interns = new ArrayList<>();
-//
-//		for(Intern intern: internRepository.findAll()) {
-//			 interns.add(InternMapper.toEntity(intern));
-//		}
-//		return interns;
-//	}
-//
 
 }

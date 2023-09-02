@@ -18,6 +18,11 @@ import java.util.List;
 @Table(name = "groups")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Group extends BaseEntity{
+    @Id
+    @SequenceGenerator(name = "group_gen", sequenceName = "group_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_gen")
+    private Long id;
 
     @Column(name = "name", nullable = false)
     String name;

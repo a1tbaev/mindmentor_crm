@@ -1,8 +1,6 @@
 package kg.nsi.crm.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import kg.nsi.crm.entity.base.BaseEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,6 +14,12 @@ import lombok.experimental.FieldDefaults;
 @Table(name = "vendors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Vendor extends BaseEntity {
+
+    @Id
+    @SequenceGenerator(name = "vendor_gen", sequenceName = "vendor_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vendor_gen")
+    private Long id;
 
     @Column(name = "name")
     String name;

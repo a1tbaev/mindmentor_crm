@@ -22,7 +22,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends BaseEntity implements UserDetails {
 
-    @Column(name = "username", nullable = false)
+    @Id
+    @SequenceGenerator(name = "user_gen", sequenceName = "user_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
+    private Long id;
+
+    @Column(name = "user_name", nullable = false)
     String username;
 
     @Column(name = "password", nullable = false)

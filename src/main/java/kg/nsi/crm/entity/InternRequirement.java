@@ -15,6 +15,12 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InternRequirement extends BaseEntity {
 
+    @Id
+    @SequenceGenerator(name = "intern_requirement_gen", sequenceName = "intern_requirement_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intern_requirement_gen")
+    private Long id;
+
     @ManyToOne(optional = false)
     @JoinColumn(columnDefinition = "intern_id",
     referencedColumnName = "id")

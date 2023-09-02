@@ -18,6 +18,12 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Stack extends BaseEntity {
 
+    @Id
+    @SequenceGenerator(name = "stack_gen", sequenceName = "stack_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stack_gen")
+    private Long id;
+
     @Column(name = "name", nullable = false)
     String name;
 

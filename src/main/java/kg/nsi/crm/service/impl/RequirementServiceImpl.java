@@ -9,7 +9,6 @@ import kg.nsi.crm.entity.Requirement;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.mapper.RequirementMapper;
 import kg.nsi.crm.repository.RequirementRepository;
-import kg.nsi.crm.repository.StackRepository;
 
 import kg.nsi.crm.service.RequirementService;
 import kg.nsi.crm.service.StackService;
@@ -20,10 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class RequirementServiceImpl implements RequirementService{
 	
 	 private final RequirementRepository requirementRepository;
-	 private final StackRepository stackRepository;
 	 private final StackService stackService;
-	 private RequirementMapper requirementMapper;
-	
+	 private  RequirementMapper requirementMapper;
+
 	@Override
 	public SimpleResponse addRequirement(RequirementDto request) {
 		
