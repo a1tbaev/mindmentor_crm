@@ -10,6 +10,7 @@ import kg.nsi.crm.repository.StackRepository;
 import kg.nsi.crm.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class MentorServiceImpl implements MentorService {
     private final MentorRepository mentorRepository;
 
     @Override
-    public SimpleResponse createMentor(MentorRequest mentorRequest) {
+    public SimpleResponse createMentor(@NotNull MentorRequest mentorRequest) {
 
         Mentor mentor = new Mentor();
 

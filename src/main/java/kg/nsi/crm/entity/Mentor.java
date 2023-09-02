@@ -16,6 +16,11 @@ import java.util.Set;
 @Table(name = "mentors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Mentor extends BaseEntity {
+    @Id
+    @SequenceGenerator(name = "mentor_gen", sequenceName = "mentor_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_gen")
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     String firstName;

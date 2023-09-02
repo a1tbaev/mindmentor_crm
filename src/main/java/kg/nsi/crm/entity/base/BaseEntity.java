@@ -17,10 +17,6 @@ import java.time.ZoneId;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
     @Column(name = "creation_date")
     LocalDate creationDate;
 
