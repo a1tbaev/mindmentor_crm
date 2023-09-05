@@ -7,6 +7,7 @@ import kg.nsi.crm.enums.InternStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -40,16 +41,23 @@ public class Intern extends BaseEntity{
     @Column(name = "is_paid")
     Boolean isPaid;
 
+    @Column(name = "creation_date")
+    LocalDate creationDate;
+
+    @Column(name = "update_date")
+    LocalDate updateDate;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
-
-    @OneToMany(mappedBy = "intern")
-    List<InternRequirement> requirements;
 
     @ManyToOne(cascade = CascadeType.ALL)
     Mentor mentor;
 
     @ManyToOne(cascade = CascadeType.ALL)
     Group group;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Stack stack;
+
 }

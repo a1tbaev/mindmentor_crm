@@ -29,7 +29,4 @@ public class Stack extends BaseEntity {
 
     @ManyToMany(mappedBy = "stacks")
     Set<Mentor> mentors;
-
-    @OneToMany(mappedBy = "stack")
-    List<Requirement> requirements;
 }
