@@ -2,7 +2,9 @@ package kg.nsi.crm.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
 import kg.nsi.crm.dto.request.InternRequest;
+import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +44,9 @@ public class InternController {
 		 
 	}
 	@GetMapping("/getAll")
-	public List<InternDto> getAll(@RequestParam(required = false, defaultValue = "0") int page,
-								  @RequestParam(required = false, defaultValue = "10") int size){
+	@Operation(summary = "Get all intern", description = "This method to get all intern")
+	public List<InternResponse> getAll(@RequestParam(required = false, defaultValue = "0") int page,
+									   @RequestParam(required = false, defaultValue = "10") int size){
 		return iServiceImpl.getAll(PageRequest.of(page, size));
 	}
 }
