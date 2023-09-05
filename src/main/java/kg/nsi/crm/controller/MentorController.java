@@ -1,13 +1,11 @@
 package kg.nsi.crm.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import kg.nsi.crm.dto.request.MentorRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.service.MentorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +17,11 @@ public class MentorController {
     @PostMapping
     public SimpleResponse createMentor(@RequestBody MentorRequest mentorRequest){
         return mentorService.createMentor(mentorRequest);
+    }
+
+    @DeleteMapping
+    @Operation(summary = "Delete mentor", description = "This method to delete mentor!")
+    public SimpleResponse deletedMentor(@RequestParam Long mentorId){
+        return mentorService.deleteMentor(mentorId);
     }
 }
