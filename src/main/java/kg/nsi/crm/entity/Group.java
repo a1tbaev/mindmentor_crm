@@ -20,7 +20,7 @@ import java.util.List;
 public class Group extends BaseEntity{
     @Id
     @SequenceGenerator(name = "group_gen", sequenceName = "group_seq",
-            allocationSize = 1)
+            allocationSize = 1, initialValue = 4)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_gen")
     Long id;
 
