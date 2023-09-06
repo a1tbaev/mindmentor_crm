@@ -21,7 +21,7 @@ import java.util.List;
 public class Intern extends BaseEntity{
     @Id
     @SequenceGenerator(name = "intern_gen", sequenceName = "intern_seq",
-            allocationSize = 1, initialValue = 4)
+            allocationSize = 1, initialValue = 6)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intern_gen")
     Long id;
 
