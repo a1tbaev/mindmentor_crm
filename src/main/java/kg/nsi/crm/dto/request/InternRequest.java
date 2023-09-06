@@ -5,7 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record InternRequest (
-
         String name,
         String surname,
         String email,

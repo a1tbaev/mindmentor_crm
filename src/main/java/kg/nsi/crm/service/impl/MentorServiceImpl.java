@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -44,11 +43,7 @@ public class MentorServiceImpl implements MentorService {
         mentor.setPhoneNumber(mentorRequest.phoneNumber());
         mentor.setIsBillable(mentorRequest.isBillable());
         mentor.setCreationDate(LocalDate.now());
-
-        if (mentorRequest.stackIDies() != null) {
-            Set<Stack> allStackById = new HashSet<>(stackRepository.findAllById(mentorRequest.stackIDies()));
-            mentor.setStacks(allStackById);
-        }
+        method(mentorRequest.stackIDies(),mentor);
         mentorRepository.save(mentor);
         return new SimpleResponse("The mentor created successfully", HttpStatus.OK);
     }
@@ -71,5 +66,25 @@ public class MentorServiceImpl implements MentorService {
                 .message(String.format("Mentor with name %s successfully deleted!", (mentor.getFirstName() + " " + mentor.getLastName())))
                 .httpStatus(HttpStatus.OK)
                 .build();
+    }
+    private void method(List<Long>allStack,Mentor mentor){
+        if (allStack != null) {
+            Set<Stack> allStackById = new HashSet<>(stackRepository.findAllById(allStack));
+            mentor.setStacks(allStackById);
+        }
+    }
+
+    @Override
+    public SimpleResponse updateMentor(Long id, MentorRequest newMentor) {
+        Mentor oldMentor = mentorRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Mentor with id %s not found!", id)));
+        if (newMentor.firstName() != null) oldMentor.setFirstName(newMentor.firstName());
+        if (newMentor.lastName() != null) oldMentor.setLastName(newMentor.lastName());
+        if (newMentor.email() != null) oldMentor.setEmail(newMentor.email());
+        if (newMentor.phoneNumber() != null) oldMentor.setPhoneNumber(newMentor.phoneNumber());
+        if (newMentor.isBillable() != null) oldMentor.setIsBillable(newMentor.isBillable());
+        method(newMentor.stackIDies(),oldMentor);
+        mentorRepository.save(oldMentor);
+        return new SimpleResponse("The mentor successfully updated!", HttpStatus.OK);
     }
 }
