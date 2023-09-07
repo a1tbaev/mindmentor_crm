@@ -11,13 +11,12 @@ import java.util.List;
 public class GroupMapper {
 	public static Group toDto(GroupRequest group, List<Intern> internList) {
 
-		Group newGroup = new Group();
-		newGroup.setName(group.groupName());
-		newGroup.setGroupStatus(group.groupStatus());
-		newGroup.setFinishDate(group.endDate());
-		newGroup.setStartDate(group.startDate());
-		newGroup.setInterns(internList);
-		newGroup.setCreationDate(LocalDate.now());
-		return newGroup;
+		return Group.builder()
+				.name(group.groupName())
+				.groupStatus(group.groupStatus())
+				.startDate(group.startDate())
+				.finishDate(group.endDate())
+				.interns(internList)
+				.build();
 	}
 }

@@ -4,11 +4,12 @@ import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.entity.Mentor;
+import kg.nsi.crm.entity.Stack;
 
 public class InternMapper {
 
 	
-	public static Intern toDto(InternRequest intern, Mentor mentor) {
+	public static Intern toDto(InternRequest intern, Mentor mentor, Stack stack) {
 		return Intern.builder()
 				.firstName(intern.name())
 				.lastName(intern.surname())
@@ -17,6 +18,7 @@ public class InternMapper {
 				.isPaid(intern.isPaid())
 				.internStatus(intern.internStatus())
 				.mentor(mentor)
+				.stack(stack)
 				.build();
 	}
 	

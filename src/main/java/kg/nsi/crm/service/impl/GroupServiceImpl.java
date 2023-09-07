@@ -19,71 +19,72 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GroupServiceImpl implements GroupService{
-	
-	private final GroupRepository groupRepository;
-	private final InternRepository internRepository;
+public class GroupServiceImpl implements GroupService {
 
-	@Override
-	public SimpleResponse addGroup(GroupRequest group) {
+    private final GroupRepository groupRepository;
+    private final InternRepository internRepository;
 
-		List<Intern> internList = internRepository.findAllById(group.internsId());
+    @Override
+    public SimpleResponse addGroup(GroupRequest group) {
 
-		Group newGroup = GroupMapper.toDto(group, internList);
+        List<Intern> internList = internRepository.findAllById(group.internsId());
 
-		for (Intern intern : internList) {
-			intern.setGroup(newGroup);
-		}
+        Group newGroup = GroupMapper.toDto(group, internList);
 
-		groupRepository.save(newGroup);
+		for (Intern intern : internList) { intern.setGroup(newGroup);}
+		internRepository.saveAll(internList);
+        groupRepository.save(newGroup);
 
-		return new SimpleResponse( "The group created successfully", HttpStatus.OK);
-	}
+        return new SimpleResponse("The group created successfully", HttpStatus.OK);
+    }
 
-	@Override
-	public GroupDto getGroupEntityById(Long groupId) {
+    @Override
+    public GroupDto getGroupEntityById(Long groupId) {
 
-		Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow();
 
-		return GroupDto.builder()
-				.id(groupId)
-				.name(group.getName())
-				.startDate(group.getStartDate())
-				.finishDate(group.getFinishDate())
-				.groupStatus(group.getGroupStatus()).build();
-	}
+        return GroupDto.builder()
+                .id(groupId)
+                .name(group.getName())
+                .startDate(group.getStartDate())
+                .finishDate(group.getFinishDate())
+                .groupStatus(group.getGroupStatus()).build();
+    }
 
-	@Override
-	public SimpleResponse delete(Long groupId) {
+    @Override
+    public SimpleResponse delete(Long groupId) {
 
-		List<Intern> internsByGroupId = internRepository.getInternsByGroupId(groupId);
+        List<Intern> internsByGroupId = internRepository.getInternsByGroupId(groupId);
 
-		for (Intern intern : internsByGroupId) {
-			intern.setGroup(null);
-			internRepository.save(intern);
-		}
+        for (Intern intern : internsByGroupId) {
+            intern.setGroup(null);
+            internRepository.save(intern);
+        }
 
-		groupRepository.deleteById(groupId);
-		return SimpleResponse.builder()
-				.httpStatus(HttpStatus.OK)
-				.message("group successfully deleted with id: " + groupId)
-				.build();
-	}
+        groupRepository.deleteById(groupId);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("group successfully deleted with id: " + groupId)
+                .build();
+    }
 
-	@Override
-	public SimpleResponse update(Long groupId, GroupRequest groupRequest) {
+    @Override
+    public SimpleResponse update(Long groupId, GroupRequest groupRequest) {
 
-		Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow();
+        List<Intern> internList = internRepository.findAllById(groupRequest.internsId());
+        for (Intern intern : internList) { intern.setGroup(group);}
 
-		if (groupRequest.groupName() != null) group.setName(groupRequest.groupName());
-		if (groupRequest.groupStatus() != null) group.setGroupStatus(groupRequest.groupStatus());
-		if (groupRequest.startDate() != null) group.setStartDate(groupRequest.startDate());
-		if (groupRequest.endDate() != null) group.setFinishDate(group.getFinishDate());
-		groupRepository.save(group);
-		return SimpleResponse.builder()
-				.httpStatus(HttpStatus.OK)
-				.message("group successfully updated with id: " + groupId)
-				.build();
-	}
+        internRepository.saveAll(internList);
+        if (groupRequest.groupName() != null) group.setName(groupRequest.groupName());
+        if (groupRequest.groupStatus() != null) group.setGroupStatus(groupRequest.groupStatus());
+        if (groupRequest.startDate() != null) group.setStartDate(groupRequest.startDate());
+        if (groupRequest.endDate() != null) group.setFinishDate(group.getFinishDate());
+        groupRepository.save(group);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.OK)
+                .message("group successfully updated with id: " + groupId)
+                .build();
+    }
 
 }

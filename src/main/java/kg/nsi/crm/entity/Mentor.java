@@ -18,7 +18,7 @@ import java.util.Set;
 public class  Mentor extends BaseEntity {
     @Id
     @SequenceGenerator(name = "mentor_gen", sequenceName = "mentor_seq",
-            allocationSize = 1)
+            allocationSize = 1,initialValue = 3)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_gen")
     Long id;
 
