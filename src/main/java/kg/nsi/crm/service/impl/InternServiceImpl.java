@@ -7,6 +7,7 @@ import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.enums.InternStatus;
+import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
 import org.springframework.data.domain.PageRequest;
@@ -35,8 +36,10 @@ public class InternServiceImpl implements InternService {
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
 
-        Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow();
-        Stack stack = stackRepository.findById(internRequest.stackId()).orElseThrow();
+        Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow(
+                () -> new NotFoundException(String.format("Mentor with id %s is not found!", internRequest.mentorId())));
+        Stack stack = stackRepository.findById(internRequest.stackId()).orElseThrow(
+                () -> new NotFoundException(String.format("Stack with id %s is not found!", internRequest.stackId())));
 
         internRepository.save(InternMapper.toDto(internRequest, mentor, stack));
         return new SimpleResponse("The intern created successfully", HttpStatus.OK);
@@ -103,7 +106,8 @@ public class InternServiceImpl implements InternService {
     @Override
     public InternDto getInternEntityById(Long id) {
         System.out.println("inside getInternEntityById");
-        return InternMapper.toEntity(internRepository.findById(id).orElseThrow(RuntimeException::new));
+        return InternMapper.toEntity(internRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Intern with id %s is not found!", id))));
     }
 
 }

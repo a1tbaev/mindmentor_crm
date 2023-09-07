@@ -4,6 +4,7 @@ import kg.nsi.crm.dto.GroupDto;
 import kg.nsi.crm.dto.request.GroupRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
+import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.mapper.GroupMapper;
 import kg.nsi.crm.repository.InternRepository;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,10 @@ public class GroupServiceImpl implements GroupService {
 
         Group newGroup = GroupMapper.toDto(group, internList);
 
-		for (Intern intern : internList) { intern.setGroup(newGroup);}
-		internRepository.saveAll(internList);
+        for (Intern intern : internList) {
+            intern.setGroup(newGroup);
+        }
+        internRepository.saveAll(internList);
         groupRepository.save(newGroup);
 
         return new SimpleResponse("The group created successfully", HttpStatus.OK);
@@ -41,7 +44,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDto getGroupEntityById(Long groupId) {
 
-        Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException(String.format("Group with id %s is not found!", groupId)));
 
         return GroupDto.builder()
                 .id(groupId)
@@ -71,9 +74,11 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public SimpleResponse update(Long groupId, GroupRequest groupRequest) {
 
-        Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException(String.format("Group with id %s is not found!", groupId)));
         List<Intern> internList = internRepository.findAllById(groupRequest.internsId());
-        for (Intern intern : internList) { intern.setGroup(group);}
+        for (Intern intern : internList) {
+            intern.setGroup(group);
+        }
 
         internRepository.saveAll(internList);
         if (groupRequest.groupName() != null) group.setName(groupRequest.groupName());
