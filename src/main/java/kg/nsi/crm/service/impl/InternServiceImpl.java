@@ -5,8 +5,10 @@ import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Mentor;
+import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.enums.InternStatus;
 import kg.nsi.crm.repository.MentorRepository;
+import kg.nsi.crm.repository.StackRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,13 +30,15 @@ public class InternServiceImpl implements InternService {
     private final InternRepository internRepository;
     private final MentorRepository mentorRepository;
     private final JdbcTemplate jdbcTemplate;
+    private final StackRepository stackRepository;
 
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
 
         Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow();
+        Stack stack = stackRepository.findById(internRequest.stackId()).orElseThrow();
 
-        internRepository.save(InternMapper.toDto(internRequest, mentor));
+        internRepository.save(InternMapper.toDto(internRequest, mentor, stack));
         return new SimpleResponse("The intern created successfully", HttpStatus.OK);
     }
 
@@ -71,16 +75,18 @@ public class InternServiceImpl implements InternService {
                 SELECT
                     i.first_name AS first_name,
                     i.last_name AS last_name,
-                    g.name AS group_name,
+                    CASE
+                        WHEN i.group_id IS NULL THEN 'Not Assigned to Group'
+                        ELSE g.name
+                    END AS group_name,
                     s.name AS stack,
                     i.status AS status,
-                    CONCAT(m.first_name,' ',m.last_name) AS mentor_name
+                    CONCAT(m.first_name, ' ', m.last_name) AS mentor_name
                 FROM interns i
-                         LEFT JOIN groups g ON g.id = i.group_id
-                         JOIN interns_requirements ir ON i.id = ir.intern_id
-                         JOIN requirements r ON ir.requirement_id = r.id
-                         JOIN stacks s ON s.id = r.stack_id
-                         FULL JOIN mentors m ON m.id = i.mentor_id;
+                LEFT JOIN groups g ON g.id = i.group_id
+                JOIN stacks s ON s.id = i.stack_id
+                FULL JOIN mentors m ON m.id = i.mentor_id;
+                ;
                 """;
 
         return jdbcTemplate.query(sql, (resultSet, i)
