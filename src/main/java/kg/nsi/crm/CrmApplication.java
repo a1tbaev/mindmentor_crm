@@ -19,21 +19,4 @@ public class CrmApplication {
 		SpringApplication.run(CrmApplication.class, args);
 	}
 
-//	@Bean
-//	public OpenAPI customOpenApi(@Value("${application-description}")String appDescription,
-//								 @Value("${application-version}")String appVersion) {
-//		return new OpenAPI().info(new Info().title("MindMentor CRM system API")
-//						.version(appVersion)
-//						.description(appDescription)
-//						.license(new License().name("Apache 2.0")
-//								.url("http://springdoc.org"))
-//						.contact(new Contact().name("akimovadna")
-//								.email("akimovadna@gmail.com")
-//
-//						))
-//				.servers(List.of(new Server().url("http://localhost:8080")
-//								.description("Dev service")));
-//
-//	}
-
 }
