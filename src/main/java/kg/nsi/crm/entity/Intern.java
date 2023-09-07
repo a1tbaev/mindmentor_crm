@@ -7,7 +7,7 @@ import kg.nsi.crm.enums.InternStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ import java.util.List;
 public class Intern extends BaseEntity{
     @Id
     @SequenceGenerator(name = "intern_gen", sequenceName = "intern_seq",
-            allocationSize = 1)
+            allocationSize = 1, initialValue = 6)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intern_gen")
     Long id;
 
@@ -40,19 +40,26 @@ public class Intern extends BaseEntity{
     Boolean isPaidForFirstMonth;
     Boolean isPaidForSecondMonth;
     Boolean isPaidForThirdMonth;
-    Integer paymentCoastPerMonth;
-    Integer balance;
+    int paymentCoastPerMonth;
+    int balance;
+
+    @Column(name = "creation_date")
+    LocalDate creationDate;
+
+    @Column(name = "update_date")
+    LocalDate updateDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
-
-    @OneToMany(mappedBy = "intern")
-    List<InternRequirement> requirements;
 
     @ManyToOne(cascade = CascadeType.ALL)
     Mentor mentor;
 
     @ManyToOne(cascade = CascadeType.ALL)
     Group group;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Stack stack;
+
 }

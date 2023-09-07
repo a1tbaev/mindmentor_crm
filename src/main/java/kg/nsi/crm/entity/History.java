@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = "history")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class History {
     @Id
@@ -22,4 +22,6 @@ public class History {
     Long id;
     LocalDate date;
     String message;
+    @ManyToOne(cascade = CascadeType.ALL)
+    Intern intern;
 }

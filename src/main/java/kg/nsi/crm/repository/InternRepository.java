@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface InternRepository extends JpaRepository<Intern, Long>{
 	Intern getInternById(Long id);
-	
 	List<Intern> getInternsByGroupId(Long groupId);
+	List<Intern> findByMentorId(Long mentorId);
+	Intern getInternByEmail(String email);
 }

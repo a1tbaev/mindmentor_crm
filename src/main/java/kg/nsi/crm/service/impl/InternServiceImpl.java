@@ -1,15 +1,21 @@
 package kg.nsi.crm.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import kg.nsi.crm.dto.request.InternRequest;
+import kg.nsi.crm.dto.response.HistoryResponse;
+import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Mentor;
+import kg.nsi.crm.entity.Stack;
+import kg.nsi.crm.enums.InternStatus;
+import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.MentorRepository;
+import kg.nsi.crm.repository.StackRepository;
+import kg.nsi.crm.service.HistoryGeneratorService;
 import kg.nsi.crm.service.PaymentService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.entity.Intern;
@@ -23,38 +29,49 @@ import lombok.experimental.FieldDefaults;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class InternServiceImpl implements InternService{
-	
-	private final InternRepository internRepository;
-	private final MentorRepository mentorRepository;
-	private final PaymentService paymentService;
+public class InternServiceImpl implements InternService {
 
-	@Override
-	public SimpleResponse createIntern(InternRequest internRequest) {
+    private final InternRepository internRepository;
+    private final MentorRepository mentorRepository;
+    private final JdbcTemplate jdbcTemplate;
+    private final StackRepository stackRepository;
+    private final PaymentService paymentService;
+    private final HistoryGeneratorService historyGeneratorService;
 
-		Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow();
+    @Override
+    public SimpleResponse createIntern(InternRequest internRequest) {
 
-		internRepository.save(InternMapper.toDto(internRequest, mentor));
-		return new SimpleResponse( "The intern created successfully", HttpStatus.OK);
-	}
-	
+        Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow(
+                () -> new NotFoundException(String.format("Mentor with id %s is not found!", internRequest.mentorId())));
+        Stack stack = stackRepository.findById(internRequest.stackId()).orElseThrow(
+                () -> new NotFoundException(String.format("Stack with id %s is not found!", internRequest.stackId())));
+
+        internRepository.save(InternMapper.toDto(internRequest, mentor, stack));
+
+        Intern internByEmail = internRepository.getInternByEmail(internRequest.email());
+        historyGeneratorService.forSave(HistoryResponse.builder()
+                        .message("Intern has been registered")
+                .build(), internByEmail.getId());
+
+        return new SimpleResponse("The intern created successfully", HttpStatus.OK);
+    }
+
 	@Override
 	public InternDto getInternById(Long id) {
 		Intern intern = internRepository.findById(id).orElseThrow();
 		paymentService.processPayment(intern);
-
 		return getInternEntityById(id);
 	}
-	
+
 	@Override
 	public 	SimpleResponse deleteInternById(Long id) {
 		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
 	}
-	
+
 	@Override
 	public SimpleResponse updateIntern(InternDto internRequest) {
 		Intern intern = this.internRepository.getInternById(internRequest.getId());
-		
+
 		if(internRequest.getFirstName()!= null)	intern.setFirstName(internRequest.getFirstName());
 		if(internRequest.getLastName()!=null) intern.setLastName(internRequest.getLastName());
 		if(internRequest.getEmail()!=null) intern.setEmail(internRequest.getEmail());
@@ -62,24 +79,51 @@ public class InternServiceImpl implements InternService{
 		if(internRequest.getInternStatus()!=null) intern.setInternStatus(internRequest.getInternStatus());
 		if(internRequest.getUpdateDate()!=null) intern.setUpdateDate(internRequest.getUpdateDate());
 
-		internRepository.save(intern);
-		return new SimpleResponse( "The mentor updated successfully", HttpStatus.OK);
-	}
+        historyGeneratorService.forSave(HistoryResponse.builder()
+                        .message("Intern with name: " + intern.getFirstName() + "updated")
+                .build(), intern.getId());
+
+        internRepository.save(intern);
+        return new SimpleResponse("The mentor updated successfully", HttpStatus.OK);
+    }
 
 
+    @Override
+    public List<InternResponse> getAll(PageRequest pageRequest) {
+        String sql = """
+                SELECT
+                    i.first_name AS first_name,
+                    i.last_name AS last_name,
+                    CASE
+                        WHEN i.group_id IS NULL THEN 'Not Assigned to Group'
+                        ELSE g.name
+                    END AS group_name,
+                    s.name AS stack,
+                    i.status AS status,
+                    CONCAT(m.first_name, ' ', m.last_name) AS mentor_name
+                FROM interns i
+                LEFT JOIN groups g ON g.id = i.group_id
+                JOIN stacks s ON s.id = i.stack_id
+                FULL JOIN mentors m ON m.id = i.mentor_id;
+                ;
+                """;
 
-	@Override
-	public List<InternDto> getAll(PageRequest pageRequest) {
-		List<InternDto> interns = new ArrayList<>();
+        return jdbcTemplate.query(sql, (resultSet, i)
+                -> new InternResponse(
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("group_name"),
+                resultSet.getString("stack"),
+                InternStatus.valueOf(resultSet.getString("status")),
+                resultSet.getString("mentor_name")
+        ));
+    }
 
-		for(Intern intern: internRepository.findAll(pageRequest)) {
-			interns.add(InternMapper.toEntity(intern));
-		}
-		return interns;
-	}
+    @Override
+    public InternDto getInternEntityById(Long id) {
+        System.out.println("inside getInternEntityById");
+        return InternMapper.toEntity(internRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Intern with id %s is not found!", id))));
+    }
 
-	@Override
-	public InternDto getInternEntityById(Long id) {
-		return InternMapper.toEntity(internRepository.findById(id).orElseThrow(RuntimeException::new));
-	}
 }

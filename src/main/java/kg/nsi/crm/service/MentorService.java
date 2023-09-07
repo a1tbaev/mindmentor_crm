@@ -5,4 +5,6 @@ import kg.nsi.crm.dto.response.SimpleResponse;
 
 public interface MentorService {
     SimpleResponse createMentor(MentorRequest mentorRequest);
+    SimpleResponse deleteMentor(Long mentorId);
+    SimpleResponse updateMentor(Long id, MentorRequest newMentor);
 }

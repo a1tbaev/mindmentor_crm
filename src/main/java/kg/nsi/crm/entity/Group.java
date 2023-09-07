@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,7 @@ import java.util.List;
 public class Group extends BaseEntity{
     @Id
     @SequenceGenerator(name = "group_gen", sequenceName = "group_seq",
-            allocationSize = 1)
+            allocationSize = 1, initialValue = 4)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_gen")
     Long id;
 
@@ -39,4 +40,12 @@ public class Group extends BaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     List<Intern> interns;
+
+    public void addIntern(Intern intern){
+        if (getInterns() == null){
+            List<Intern> internList = new ArrayList<>();
+            internList.add(intern);
+            interns = internList;
+        }else interns.add(intern);
+    }
 }

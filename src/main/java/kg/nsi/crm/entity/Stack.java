@@ -20,7 +20,7 @@ public class Stack extends BaseEntity {
 
     @Id
     @SequenceGenerator(name = "stack_gen", sequenceName = "stack_seq",
-            allocationSize = 1)
+            allocationSize = 1,initialValue = 3)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stack_gen")
     Long id;
 
@@ -29,7 +29,4 @@ public class Stack extends BaseEntity {
 
     @ManyToMany(mappedBy = "stacks")
     Set<Mentor> mentors;
-
-    @OneToMany(mappedBy = "stack")
-    List<Requirement> requirements;
 }
