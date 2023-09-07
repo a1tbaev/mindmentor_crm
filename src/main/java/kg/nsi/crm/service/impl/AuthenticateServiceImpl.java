@@ -5,11 +5,11 @@ import kg.nsi.crm.config.jwt.JwtService;
 import kg.nsi.crm.dto.request.AuthenticateRequest;
 import kg.nsi.crm.dto.response.AuthenticateResponse;
 import kg.nsi.crm.entity.User;
+import kg.nsi.crm.exception.exceptions.BadCredentialException;
 import kg.nsi.crm.repository.UserRepository;
 import kg.nsi.crm.service.AuthenticateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,13 +30,9 @@ public class AuthenticateServiceImpl implements AuthenticateService {
 
         User userInfo = userRepository.findByUsername(request.userName())
                 .orElseThrow(() -> {
-                    log.error(String.format("Пользователь с адресом электронной почты %s не существует", request.userName()));
-                    try {
-                        throw new ChangeSetPersister.NotFoundException();
-                    } catch (ChangeSetPersister.NotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+            log.error(String.format("Пользователь с адресом электронной почты %s не существует", request.userName()));
+                    return new BadCredentialException(String.format("Пользователь с адресом электронной почты %s не существует", request.userName()));
+        });
         if (!passwordEncoder.matches(request.password(), userInfo.getPassword())) {
             log.error("Пароль не подходит");
         }

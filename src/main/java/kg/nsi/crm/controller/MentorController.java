@@ -41,4 +41,13 @@ public class MentorController {
     public SimpleResponse deletedMentor(@RequestParam Long mentorId){
         return mentorService.deleteMentor(mentorId);
     }
+
+    @PutMapping
+    @Operation(summary = "Update mentor", description = "This method to update mentor!")
+    public SimpleResponse updateMentor(@RequestBody MentorRequest request,@RequestParam Long mentorId){
+        return mentorService.updateMentor(mentorId,request);
+    }
+
+
+
 }

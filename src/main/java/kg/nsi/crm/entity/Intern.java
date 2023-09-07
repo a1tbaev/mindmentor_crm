@@ -8,7 +8,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -38,8 +37,11 @@ public class Intern extends BaseEntity{
     @Column(name = "phone_number")
     String phoneNumber;
 
-    @Column(name = "is_paid")
-    Boolean isPaid;
+    Boolean isPaidForFirstMonth;
+    Boolean isPaidForSecondMonth;
+    Boolean isPaidForThirdMonth;
+    int paymentCoastPerMonth;
+    int balance;
 
     @Column(name = "creation_date")
     LocalDate creationDate;

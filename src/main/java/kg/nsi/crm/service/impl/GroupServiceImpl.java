@@ -2,19 +2,19 @@ package kg.nsi.crm.service.impl;
 
 import kg.nsi.crm.dto.GroupDto;
 import kg.nsi.crm.dto.request.GroupRequest;
+import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
+import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.mapper.GroupMapper;
 import kg.nsi.crm.repository.InternRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import kg.nsi.crm.service.HistoryGeneratorService;
 import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.repository.GroupRepository;
-
 import kg.nsi.crm.service.GroupService;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 @Service
@@ -23,25 +23,35 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
     private final InternRepository internRepository;
+	private final HistoryGeneratorService historyGeneratorService;
 
     @Override
-    public SimpleResponse addGroup(GroupRequest group) {
+    public SimpleResponse addGroup(GroupRequest groupRequest) {
+        List<Intern> internList = internRepository.findAllById(groupRequest.internsId());
 
-        List<Intern> internList = internRepository.findAllById(group.internsId());
+        if (internList.isEmpty()) {
+            return new SimpleResponse("No interns found for the provided IDs", HttpStatus.BAD_REQUEST);
+        }
 
-        Group newGroup = GroupMapper.toDto(group, internList);
+        Group newGroup = GroupMapper.toEntity(groupRequest, internList);
 
-		for (Intern intern : internList) { intern.setGroup(newGroup);}
-		internRepository.saveAll(internList);
+        internRepository.saveAll(internList);
+
+        for (Intern intern : internList) {
+            intern.setGroup(newGroup);
+            historyGeneratorService.forSave(new HistoryResponse("Intern has been added to group " + groupRequest.groupName()), intern.getId());
+        }
+
         groupRepository.save(newGroup);
 
         return new SimpleResponse("The group created successfully", HttpStatus.OK);
     }
 
+
     @Override
     public GroupDto getGroupEntityById(Long groupId) {
 
-        Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException(String.format("Group with id %s is not found!", groupId)));
 
         return GroupDto.builder()
                 .id(groupId)
@@ -71,9 +81,11 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public SimpleResponse update(Long groupId, GroupRequest groupRequest) {
 
-        Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException(String.format("Group with id %s is not found!", groupId)));
         List<Intern> internList = internRepository.findAllById(groupRequest.internsId());
-        for (Intern intern : internList) { intern.setGroup(group);}
+        for (Intern intern : internList) {
+            intern.setGroup(group);
+        }
 
         internRepository.saveAll(internList);
         if (groupRequest.groupName() != null) group.setName(groupRequest.groupName());
@@ -86,5 +98,4 @@ public class GroupServiceImpl implements GroupService {
                 .message("group successfully updated with id: " + groupId)
                 .build();
     }
-
 }
