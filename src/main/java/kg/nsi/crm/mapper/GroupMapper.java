@@ -20,4 +20,14 @@ public class GroupMapper {
 		newGroup.setCreationDate(LocalDate.now());
 		return newGroup;
 	}
+
+	public static GroupDto toEntity (Group group){
+		return GroupDto.builder()
+				.id(group.getId())
+				.name(group.getName())
+				.startDate(group.getStartDate())
+				.finishDate(group.getFinishDate())
+				.groupStatus(group.getGroupStatus())
+				.build();
+	}
 }

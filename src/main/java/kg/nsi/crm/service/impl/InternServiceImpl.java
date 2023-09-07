@@ -7,6 +7,7 @@ import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.repository.MentorRepository;
+import kg.nsi.crm.service.PaymentService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class InternServiceImpl implements InternService{
 	
 	private final InternRepository internRepository;
 	private final MentorRepository mentorRepository;
+	private final PaymentService paymentService;
 
 	@Override
 	public SimpleResponse createIntern(InternRequest internRequest) {
@@ -38,6 +40,9 @@ public class InternServiceImpl implements InternService{
 	
 	@Override
 	public InternDto getInternById(Long id) {
+		Intern intern = internRepository.findById(id).orElseThrow();
+		paymentService.processPayment(intern);
+
 		return getInternEntityById(id);
 	}
 	
@@ -54,7 +59,6 @@ public class InternServiceImpl implements InternService{
 		if(internRequest.getLastName()!=null) intern.setLastName(internRequest.getLastName());
 		if(internRequest.getEmail()!=null) intern.setEmail(internRequest.getEmail());
 		if(internRequest.getPhoneNumber()!=null) intern.setPhoneNumber(internRequest.getPhoneNumber());
-		if(internRequest.getIsPaid()!=null) intern.setIsPaid(internRequest.getIsPaid());
 		if(internRequest.getInternStatus()!=null) intern.setInternStatus(internRequest.getInternStatus());
 		if(internRequest.getUpdateDate()!=null) intern.setUpdateDate(internRequest.getUpdateDate());
 
@@ -76,8 +80,6 @@ public class InternServiceImpl implements InternService{
 
 	@Override
 	public InternDto getInternEntityById(Long id) {
-		System.out.println("inside getInternEntityById");
 		return InternMapper.toEntity(internRepository.findById(id).orElseThrow(RuntimeException::new));
 	}
-
 }

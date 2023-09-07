@@ -14,8 +14,8 @@ public class InternMapper {
 				.lastName(intern.surname())
 				.email(intern.email())
 				.phoneNumber(intern.phoneNumber())
-				.isPaid(intern.isPaid())
 				.internStatus(intern.internStatus())
+				.paymentCoastPerMonth(intern.paymentCoast())
 				.mentor(mentor)
 				.build();
 	}
@@ -29,8 +29,10 @@ public class InternMapper {
 				.lastName(intern.getLastName())
 				.email(intern.getEmail())
 				.phoneNumber(intern.getPhoneNumber())
-				.isPaid(intern.getIsPaid())
 				.internStatus(intern.getInternStatus())
+				.isPaidForFirstMonth(intern.getIsPaidForFirstMonth())
+				.isPaidForSecondMonth(intern.getIsPaidForSecondMonth())
+				.isPaidForThirdMonth(intern.getIsPaidForThirdMonth())
 				.build();
 	}
 }

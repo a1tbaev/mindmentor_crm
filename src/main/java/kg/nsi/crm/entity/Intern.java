@@ -37,8 +37,11 @@ public class Intern extends BaseEntity{
     @Column(name = "phone_number")
     String phoneNumber;
 
-    @Column(name = "is_paid")
-    Boolean isPaid;
+    Boolean isPaidForFirstMonth;
+    Boolean isPaidForSecondMonth;
+    Boolean isPaidForThirdMonth;
+    Integer paymentCoastPerMonth;
+    Integer balance;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
