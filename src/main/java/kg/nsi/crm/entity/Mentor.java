@@ -1,10 +1,12 @@
 package kg.nsi.crm.entity;
 
 import jakarta.persistence.*;
+import kg.nsi.crm.dto.ExperienceDto;
 import kg.nsi.crm.entity.base.BaseEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 @Getter
@@ -22,20 +24,27 @@ public class  Mentor extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_gen")
     Long id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     String lastName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     String email;
 
-    @Column(name = "phone_number", nullable = false)
-    String phoneNumber;
+//    @Column(name = "phone_number", nullable = false)
+//    String phoneNumber;
 
-    @Column(name = "is_billable", nullable = false)
+    @Column(name = "is_billable")
     Boolean isBillable;
+
+    @Column(name="education")
+    String education;
+
+    @Column(name = "experience")
+    String experience;
+
 
     @ManyToMany
     @JoinTable(name = "mentors_stacks",

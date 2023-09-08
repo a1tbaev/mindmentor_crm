@@ -1,6 +1,7 @@
 package kg.nsi.crm.mapper;
 
 import kg.nsi.crm.dto.request.MentorRequest;
+import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.entity.Mentor;
 
 public class MentorMapper {
@@ -9,9 +10,19 @@ public class MentorMapper {
         return Mentor.builder()
                 .firstName(mentorRequest.firstName())
                 .lastName(mentorRequest.lastName())
-                .email(mentorRequest.email())
                 .isBillable(mentorRequest.isBillable())
-                .phoneNumber(mentorRequest.phoneNumber())
+                .email(mentorRequest.email())
+                .build();
+    }
+
+    public static Mentor toEntity(UpdatedMentorRequest updatedMentorRequest) {
+        return Mentor.builder()
+                .firstName(updatedMentorRequest.firstName())
+                .lastName(updatedMentorRequest.lastName())
+                .experience(updatedMentorRequest.experience())
+                .education(updatedMentorRequest.education())
+                .isBillable(updatedMentorRequest.isBillable())
+                .email(updatedMentorRequest.email())
                 .build();
     }
 }

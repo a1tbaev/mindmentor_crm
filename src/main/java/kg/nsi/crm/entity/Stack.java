@@ -27,6 +27,6 @@ public class Stack extends BaseEntity {
     @Column(name = "name", nullable = false)
     String name;
 
-    @ManyToMany(mappedBy = "stacks")
-    Set<Mentor> mentors;
+        @ManyToMany(mappedBy = "stacks")
+        Set<Mentor> mentors;
 }

@@ -12,13 +12,11 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class ExtractedDataDto {
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private ArrayList<String> email;
     private ArrayList<String> education;
     private ArrayList<ExperienceDto> experience;
-    private String selfSummary;
-    private ArrayList<String> phoneNumbers;
     private ArrayList<String> stack;
-    private ArrayList<String> urls;
 
 }
