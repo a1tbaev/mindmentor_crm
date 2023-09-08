@@ -1,6 +1,7 @@
 package kg.nsi.crm.service.impl;
 
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.exception.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class StackServiceImpl implements StackService{
 
 	@Override
 	public Stack getStackEntityById(Long stackId) {
-		return stackRepository.findById(stackId).orElseThrow(RuntimeException::new);
+		return stackRepository.findById(stackId).orElseThrow(
+				()-> new NotFoundException("Stack by "+stackId+" not found!"));
 	}
 
 
