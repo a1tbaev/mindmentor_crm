@@ -7,6 +7,7 @@ import kg.nsi.crm.dto.response.VendorResponse;
 import kg.nsi.crm.entity.Vendor;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.VendorRepository;
+import kg.nsi.crm.repository.custom.VendorCustom;
 import kg.nsi.crm.service.VacancyService;
 import kg.nsi.crm.service.VendorService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final JdbcTemplate jdbcTemplate;
-    public final VacancyService vacancyService;
+    private final VacancyService vacancyService;
 
     @Override
     public SimpleResponse saveVendor(VendorRequest request) {
@@ -54,34 +55,27 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public List<VendorResponse> getAllVendors() {
-        String sql = """
-                SELECT v.name           AS name,
-                       v.image          AS img,
-                       v.address        AS address,
-                       v.contact_number AS phone_number,
-                       v.email          AS email
-                FROM vendors v
-                        """;
-        return jdbcTemplate.query(sql,(resultset,i)
-                ->VendorResponse
-                .builder()
-                .name(resultset.getString("name"))
-                .img(resultset.getString("img"))
-                .address(resultset.getString("address"))
-                .phoneNumber(resultset.getString("phone_number"))
-                .email(resultset.getString("email"))
-                .build());
+        return jdbcTemplate.query(new VendorCustom().getAllVendorQuery(),
+                (resultset, i)
+                        -> VendorResponse
+                        .builder()
+                        .name(resultset.getString("name"))
+                        .img(resultset.getString("img"))
+                        .address(resultset.getString("address"))
+                        .phoneNumber(resultset.getString("phone_number"))
+                        .email(resultset.getString("email"))
+                        .build());
     }
 
     @Override
     public SimpleResponse updateVendor(VendorRequest request, Long id) {
         Vendor oldVendor = vendorRepository.findById(id).orElseThrow(
-                ()->new NotFoundException("Vendor by id "+id+" not found!"));
-        if (request.name()!=null) oldVendor.setName(request.name());
-        if (request.img()!=null) oldVendor.setImage(request.img());
-        if (request.email()!=null) oldVendor.setEmail(request.email());
-        if (request.phoneNumber()!=null) oldVendor.setContactNumber(request.phoneNumber());
-        if (request.address()!=null) oldVendor.setAddress(request.address());
+                () -> new NotFoundException("Vendor by id " + id + " not found!"));
+        if (request.name() != null) oldVendor.setName(request.name());
+        if (request.img() != null) oldVendor.setImage(request.img());
+        if (request.email() != null) oldVendor.setEmail(request.email());
+        if (request.phoneNumber() != null) oldVendor.setContactNumber(request.phoneNumber());
+        if (request.address() != null) oldVendor.setAddress(request.address());
         vendorRepository.save(oldVendor);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
@@ -91,8 +85,8 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public ResponseVendor getById(Long id) {
-        Vendor vendor =  vendorRepository.findById(id).orElseThrow(
-                ()->new NotFoundException("Vendor by id "+id+" not found!"));
+        Vendor vendor = vendorRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Vendor by id " + id + " not found!"));
         return ResponseVendor.builder()
                 .name(vendor.getName())
                 .address(vendor.getAddress())
