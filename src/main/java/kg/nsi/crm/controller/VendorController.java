@@ -26,13 +26,13 @@ public class VendorController {
     }
     @DeleteMapping
     @Operation(summary = "Delete the vendor", description = "This method to delete the vendor by id")
-    public SimpleResponse deletedMentor(@RequestParam Long id){
+    public SimpleResponse deletedVendor(@RequestParam Long id){
         return vendorService.deleteVendor(id);
     }
 
     @PutMapping
     @Operation(summary = "Update vendor", description = "This method to update vendor!")
-    public SimpleResponse updateMentor(@RequestBody VendorRequest request, @RequestParam Long id){
+    public SimpleResponse updateVendor(@RequestBody VendorRequest request, @RequestParam Long id){
         return vendorService.updateVendor(request,id);
     }
     @GetMapping
