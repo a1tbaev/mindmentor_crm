@@ -12,8 +12,8 @@ public record InternRequest (
         @PhoneNumberValid
         String phoneNumber,
         Long stackId,
-        boolean isPaid,
         Long mentorId,
+        Integer paymentCoast,
         InternStatus internStatus
 
 ){

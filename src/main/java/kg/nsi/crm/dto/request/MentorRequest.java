@@ -9,8 +9,6 @@ public record MentorRequest (
         String firstName,
         String lastName,
         String email,
-        String phoneNumber,
-        Boolean isBillable,
-        List<Long> stackIDies
+        Boolean isBillable
 ){
 }

@@ -73,11 +73,7 @@ public class DataExtractor {
         JsonNode node = jsonNode.get("affinda").get("extracted_data");
         JsonNode personalNode = node.get("personal_infos");
         return ExtractedDataDto.builder()
-                .fullName(personalNode.get("name").get("raw_name").asText())
-                .selfSummary(personalNode.get("self_summary").asText())
-                .phoneNumbers(extractSpecificField(personalNode.get("phones")))
                 .email(extractSpecificField(personalNode.get("mails")))
-                .urls(extractSpecificField(personalNode.get("urls")))
                 .stack(extractSpecificFieldWithNote(node.get("skills"),"name"))
                 .education(extractSpecificFieldWithNote(node.get("education").get("entries"),"establishment"))
                 .experience(extractExperience(node.get("work_experience").get("entries")))

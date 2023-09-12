@@ -5,11 +5,10 @@ import kg.nsi.crm.dto.request.GroupRequest;
 import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.entity.Intern;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class GroupMapper {
-	public static Group toDto(GroupRequest group, List<Intern> internList) {
+	public static Group toEntity(GroupRequest group, List<Intern> internList) {
 
 		return Group.builder()
 				.name(group.groupName())
@@ -17,6 +16,16 @@ public class GroupMapper {
 				.startDate(group.startDate())
 				.finishDate(group.endDate())
 				.interns(internList)
+				.build();
+	}
+
+	public static GroupDto toDto (Group group){
+		return GroupDto.builder()
+				.id(group.getId())
+				.name(group.getName())
+				.startDate(group.getStartDate())
+				.finishDate(group.getFinishDate())
+				.groupStatus(group.getGroupStatus())
 				.build();
 	}
 }

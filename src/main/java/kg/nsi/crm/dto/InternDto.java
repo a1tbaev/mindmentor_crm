@@ -37,8 +37,12 @@ public class InternDto{
     
 	String phoneNumber;
     
-    Boolean isPaid;
-    
+    Boolean isPaidForFirstMonth;
+    Boolean isPaidForSecondMonth;
+    Boolean isPaidForThirdMonth;
+    GroupDto groupDto;
+    String stack;
+
     @Enumerated(EnumType.STRING)
     InternStatus internStatus;
    
