@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,8 +23,8 @@ public class Vacancy {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vacancy_gen")
     Long id;
 
-    @OneToOne
-    Stack stack;
+    @Column(name = "vacancy_name")
+    String vacancyName;
 
     @Column(name = "release_day")
     LocalDate releaseDay;
