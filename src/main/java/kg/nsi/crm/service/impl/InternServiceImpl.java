@@ -2,15 +2,16 @@ package kg.nsi.crm.service.impl;
 
 import java.util.List;
 import kg.nsi.crm.dto.request.InternRequest;
-import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.enums.InternStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
+import kg.nsi.crm.repository.custom.InternCustom;
 import kg.nsi.crm.service.HistoryGeneratorService;
 import kg.nsi.crm.service.PaymentService;
 import org.springframework.data.domain.PageRequest;
@@ -31,12 +32,12 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InternServiceImpl implements InternService {
 
-    private final InternRepository internRepository;
-    private final MentorRepository mentorRepository;
-    private final JdbcTemplate jdbcTemplate;
-    private final StackRepository stackRepository;
-    private final PaymentService paymentService;
-    private final HistoryGeneratorService historyGeneratorService;
+    final InternRepository internRepository;
+    final MentorRepository mentorRepository;
+    final JdbcTemplate jdbcTemplate;
+    final StackRepository stackRepository;
+    final PaymentService paymentService;
+    final HistoryGeneratorService historyGeneratorService;
 
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
@@ -90,25 +91,7 @@ public class InternServiceImpl implements InternService {
 
     @Override
     public List<InternResponse> getAll(PageRequest pageRequest) {
-        String sql = """
-                SELECT
-                    i.first_name AS first_name,
-                    i.last_name AS last_name,
-                    CASE
-                        WHEN i.group_id IS NULL THEN 'Not Assigned to Group'
-                        ELSE g.name
-                    END AS group_name,
-                    s.name AS stack,
-                    i.status AS status,
-                    CONCAT(m.first_name, ' ', m.last_name) AS mentor_name
-                FROM interns i
-                LEFT JOIN groups g ON g.id = i.group_id
-                JOIN stacks s ON s.id = i.stack_id
-                FULL JOIN mentors m ON m.id = i.mentor_id;
-                ;
-                """;
-
-        return jdbcTemplate.query(sql, (resultSet, i)
+        return jdbcTemplate.query(new InternCustom().getAllQuery(), (resultSet, i)
                 -> new InternResponse(
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
