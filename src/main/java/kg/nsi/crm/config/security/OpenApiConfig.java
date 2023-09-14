@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 {
                     @Server(
                             description = "Local DEV",
-                            url = "http://localhost:8080"
+                            url = "https://mindmentor-back-4e278328d2f5.herokuapp.com/swagger-ui/index.html#/Vacancy/createVacancy"
                     )
                 })
 @SecurityScheme(
