@@ -17,13 +17,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 title = "CRM system API",
                 version = "1.0"
                  ),
-                servers =
-                {
-                    @Server(
-                            description = "Local DEV",
-                            url = "https://mindmentor-back-4e278328d2f5.herokuapp.com/swagger-ui/index.html#/Vacancy/createVacancy"
-                    )
-                })
+        servers = {@Server(url="https://mindmentor-back-4e278328d2f5.herokuapp.com")})
 @SecurityScheme(
         name = "bearerAuth",
         description = "JWT Auth description",
