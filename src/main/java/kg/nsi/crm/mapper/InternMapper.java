@@ -19,7 +19,7 @@ public class InternMapper {
 				.isPaidForFirstMonth(false)
 				.isPaidForSecondMonth(false)
 				.isPaidForThirdMonth(false)
-				.paymentCoastPerMonth(intern.paymentCoast())
+				.paymentCoastPerMonth(intern.paymentCost())
 				.mentor(mentor)
 				.stack(stack)
 				.build();

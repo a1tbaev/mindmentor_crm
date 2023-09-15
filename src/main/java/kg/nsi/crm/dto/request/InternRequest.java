@@ -13,7 +13,7 @@ public record InternRequest (
         String phoneNumber,
         Long stackId,
         Long mentorId,
-        Integer paymentCoast,
+        Integer paymentCost,
         InternStatus internStatus
 
 ){
