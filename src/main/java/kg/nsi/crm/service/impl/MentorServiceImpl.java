@@ -112,7 +112,6 @@ public class MentorServiceImpl implements MentorService {
             Set<Stack> stacks = new HashSet<>();
 
             for(String name: updatedMentorRequest.stacks()){
-                System.out.println(name);
                 stacks.add(stackRepository.findByName(name));
             }
 
