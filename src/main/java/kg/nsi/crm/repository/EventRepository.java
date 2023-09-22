@@ -1,12 +1,9 @@
 package kg.nsi.crm.repository;
 
+import kg.nsi.crm.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import kg.nsi.crm.entity.Group;
-
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Long>{
-    Group getById(Long id);
-
+public interface EventRepository extends JpaRepository<Event, Long> {
 }
