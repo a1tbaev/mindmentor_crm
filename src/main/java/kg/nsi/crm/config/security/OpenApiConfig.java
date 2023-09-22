@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 title = "CRM system API",
                 version = "1.0"
                  ),
-        servers = {@Server(url="https://mindmentor-back-4e278328d2f5.herokuapp.com")})
+        servers = {@Server(url="http://localhost:8080")})
 @SecurityScheme(
         name = "bearerAuth",
         description = "JWT Auth description",

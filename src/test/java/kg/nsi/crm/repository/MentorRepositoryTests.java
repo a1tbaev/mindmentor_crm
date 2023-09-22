@@ -23,7 +23,6 @@ public class MentorRepositoryTests {
     @Autowired
     private MentorRepository mentorRepository;
 
-
     @Test
     public void MentorRepository_CreateMentor_ReturnMentor(){
         Set<String> stacks = new HashSet<>();
@@ -72,8 +71,6 @@ public class MentorRepositoryTests {
 
 
         Mentor savedMentor = mentorRepository.save(MentorMapper.toEntity(updatedMentorRequest));
-
-
         Optional<Mentor> mentor = mentorRepository.findById(savedMentor.getId());
 
         //Assert
