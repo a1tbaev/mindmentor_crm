@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import kg.nsi.crm.enums.DeveloperLevel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 import java.time.LocalDate;
 
 @Getter

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import kg.nsi.crm.entity.base.BaseEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 import java.util.Set;
 
 @Getter
