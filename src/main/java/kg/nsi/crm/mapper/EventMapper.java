@@ -1,6 +1,7 @@
 package kg.nsi.crm.mapper;
 
 import kg.nsi.crm.dto.request.EventRequest;
+import kg.nsi.crm.dto.response.EventResponse;
 import kg.nsi.crm.entity.Event;
 import kg.nsi.crm.entity.Group;
 import lombok.Builder;
@@ -20,7 +21,22 @@ public class EventMapper {
                 .endTime(endTime)
                 .startTime(startTime)
                 .group(group)
+                .location(eventRequest.getLocation())
                 .build();
 
     }
+
+    public static EventResponse toDto(Event event){
+        return EventResponse.builder()
+                .meetingName(event.getMeetingName())
+                .date(event.getDate())
+                .groupName(event.getGroup().getName())
+                .location(event.getLocation())
+                .description(event.getDescription())
+                .startTime(event.getStartTime())
+                .endTime(event.getEndTime())
+                .build();
+    }
+
+
 }

@@ -41,6 +41,9 @@ public class Group extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     List<Intern> interns;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    List<Event> events;
+
     public void addIntern(Intern intern){
         if (getInterns() == null){
             List<Intern> internList = new ArrayList<>();
