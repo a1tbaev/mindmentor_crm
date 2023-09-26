@@ -24,6 +24,7 @@ public class Event {
     LocalDate date;
     LocalTime startTime;
     LocalTime endTime;
+
     @ManyToOne(cascade = CascadeType.ALL)
     Group group;
 

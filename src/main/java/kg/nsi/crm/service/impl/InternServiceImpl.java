@@ -66,6 +66,15 @@ public class InternServiceImpl implements InternService {
 
 	@Override
 	public 	SimpleResponse deleteInternById(Long id) {
+        Intern intern = internRepository.getInternById(id);
+
+        intern.setMentor(null);
+        intern.setStack(null);
+        intern.setGroup(null);
+
+        internRepository.save(intern);
+
+        internRepository.delete(intern);
 		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
 	}
 
