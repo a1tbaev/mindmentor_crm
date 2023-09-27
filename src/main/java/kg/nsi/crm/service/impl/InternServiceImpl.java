@@ -71,9 +71,7 @@ public class InternServiceImpl implements InternService {
         intern.setMentor(null);
         intern.setStack(null);
         intern.setGroup(null);
-
         internRepository.save(intern);
-
         internRepository.delete(intern);
 		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
 	}
