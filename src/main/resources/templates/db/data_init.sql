@@ -1,8 +1,10 @@
 insert into users (id, creation_date, update_date, password, role, user_name)
-values (1, '2023-02-01', '2023-04-01', '$2a$04$2ZrUs.tLVfXY8vTjPsMPoeZgr5JmdJuwuXXBHGAroSp79B9SdL1A.', 'SUPERADMIN',
+values (1, '2023-02-01', '2023-04-01', '$2a$12$Dk5.myewTKPGpVXCiu0nmOY8tf8DostKvERCY65TLaw/dG57jiWpm', 'SUPERADMIN',
         'superadmin@gmail.com'),
-       (2, '2023-02-02', '2023-04-02', '$2a$04$taHO005AAGMbr9RQ1jb6he.GCbMcqm5a.WEW7phbTjWoRdUfYHmeq', 'MANAGER',
+       (2, '2023-02-02', '2023-04-02', '$2a$12$9p6Me6viqzXWZILyhUOjE.a/lCJeAydhHH5SJ.zVyjMyB9uMhkKpa', 'MANAGER',
         'menager@gmail.com');
+--superadmin123
+--manager123
 
 insert into groups (id, creation_date, update_date, finish_date, status, name, start_date)
 VALUES (1, '2023-02-01', '2023-04-01', '2024-02-01', 'ACTIVE', 'JAVA-1', '2023-02-06'),
