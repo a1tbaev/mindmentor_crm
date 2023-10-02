@@ -1,5 +1,6 @@
 package kg.nsi.crm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
@@ -100,6 +101,7 @@ public class InternServiceImpl implements InternService {
     public List<InternResponse> getAll(PageRequest pageRequest) {
         return jdbcTemplate.query(new InternCustom().getAllQuery(), (resultSet, i)
                 -> new InternResponse(
+                resultSet.getLong("id"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
                 resultSet.getString("group_name"),
@@ -116,4 +118,19 @@ public class InternServiceImpl implements InternService {
                 () -> new NotFoundException(String.format("Intern with id %s is not found!", id))));
     }
 
+    @Override
+    public List<InternResponse> getInternsByName(String name){
+        List<Intern> interns = internRepository.getInternsByFirstName(name);
+        List<InternResponse> internResponses = new ArrayList<>();
+
+        for (Intern intern : interns) {
+            InternResponse internResponse = new InternResponse();
+            internResponse.setId(intern.getId());
+            internResponse.setFirstName(intern.getFirstName());
+            internResponse.setLastName(intern.getLastName());
+            internResponse.setStackName(intern.getStack().getName());
+            internResponses.add(internResponse);
+        }
+        return internResponses;
+    }
 }
