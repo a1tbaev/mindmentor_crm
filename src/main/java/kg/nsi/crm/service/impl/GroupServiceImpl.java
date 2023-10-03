@@ -2,11 +2,15 @@ package kg.nsi.crm.service.impl;
 
 import kg.nsi.crm.dto.GroupDto;
 import kg.nsi.crm.dto.request.GroupRequest;
+import kg.nsi.crm.dto.response.EventResponse;
 import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.entity.Event;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
+import kg.nsi.crm.mapper.EventMapper;
 import kg.nsi.crm.mapper.GroupMapper;
+import kg.nsi.crm.repository.EventRepository;
 import kg.nsi.crm.repository.InternRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,8 @@ import kg.nsi.crm.entity.Group;
 import kg.nsi.crm.repository.GroupRepository;
 import kg.nsi.crm.service.GroupService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +30,7 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final InternRepository internRepository;
 	private final HistoryGeneratorService historyGeneratorService;
+    private final EventRepository eventRepository;
 
     @Override
     public SimpleResponse addGroup(GroupRequest groupRequest) {
@@ -97,5 +104,16 @@ public class GroupServiceImpl implements GroupService {
                 .httpStatus(HttpStatus.OK)
                 .message("group successfully updated with id: " + groupId)
                 .build();
+    }
+
+    @Override
+    public List<EventResponse> getAllEvents(Long groupId) {
+        List<Event> events = eventRepository.getAllEventsByGroupId(groupId);
+        List<EventResponse> allEvents = new ArrayList<>();
+
+        for(Event event: events){
+            allEvents.add(EventMapper.toDto(event));
+        }
+        return allEvents;
     }
 }
