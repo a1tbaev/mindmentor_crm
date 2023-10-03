@@ -4,11 +4,14 @@ package kg.nsi.crm.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.nsi.crm.dto.request.GroupRequest;
+import kg.nsi.crm.dto.response.EventResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.service.GroupService;
 import org.springframework.web.bind.annotation.*;
 import kg.nsi.crm.dto.GroupDto;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/groups")
@@ -40,5 +43,11 @@ public class GroupController {
 	@PutMapping("/{groupId}")
 	SimpleResponse update(@PathVariable Long groupId, @RequestBody GroupRequest groupRequest){
 		return groupService.update(groupId, groupRequest);
+	}
+
+	@Operation(summary = "Get group's all the events", description = "Get group's all the events")
+	@GetMapping("/events/{groupId}")
+	List<EventResponse> getAllEvents(@RequestParam Long groupId){
+		return groupService.getAllEvents(groupId);
 	}
 }
