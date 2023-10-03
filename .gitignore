@@ -35,4 +35,4 @@ build/
 
 !application.properties
 src/main/resources/application-kutman.properties
-
+src/main/resources/application-ai.properties

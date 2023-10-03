@@ -3,8 +3,6 @@ package kg.nsi.crm.service;
 import kg.nsi.crm.dto.request.EventRequest;
 import kg.nsi.crm.dto.response.EventResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
-import kg.nsi.crm.entity.Event;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,5 +19,6 @@ public interface EventService {
     List<EventResponse> getEventsForWeekAfter(LocalDate date);
 
     SimpleResponse deleteEvent(Long id);
+    List<EventResponse> getAll();
 
 }
