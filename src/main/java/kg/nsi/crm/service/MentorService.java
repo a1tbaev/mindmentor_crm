@@ -1,17 +1,22 @@
 package kg.nsi.crm.service;
 
 import kg.nsi.crm.dto.request.MentorRequest;
+import kg.nsi.crm.dto.request.MentorUpdRequest;
 import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.ExtractedDataDto;
+import kg.nsi.crm.dto.response.MentorResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 public interface MentorService {
-    ExtractedDataDto getExtractedDataFromCv(MentorRequest mentorRequest, MultipartFile file);
+    SimpleResponse saveExtractedDataFromCv(MentorRequest mentorRequest, MultipartFile file);
     SimpleResponse deleteMentor(Long mentorId);
-    SimpleResponse updateMentor(Long id, MentorRequest newMentor);
+    SimpleResponse updateMentor(Long id, MentorUpdRequest newMentor);
 
-    SimpleResponse createMentor(UpdatedMentorRequest updatedMentorRequest);
+    MentorResponse getMentor(Long mentorId);
+
+    List<MentorResponse> getAll();
 }

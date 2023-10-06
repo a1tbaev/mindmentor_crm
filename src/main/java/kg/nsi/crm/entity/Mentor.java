@@ -1,12 +1,8 @@
 package kg.nsi.crm.entity;
-
 import jakarta.persistence.*;
-import kg.nsi.crm.dto.ExperienceDto;
 import kg.nsi.crm.entity.base.BaseEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
 import java.util.Set;
 
 @Getter
@@ -17,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "mentors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class  Mentor extends BaseEntity {
+public class Mentor extends BaseEntity {
     @Id
     @SequenceGenerator(name = "mentor_gen", sequenceName = "mentor_seq",
             allocationSize = 1, initialValue = 6)
@@ -45,6 +41,7 @@ public class  Mentor extends BaseEntity {
     @Column(name = "experience")
     String experience;
 
+    String skills;
 
     @ManyToMany
     @JoinTable(name = "mentors_stacks",

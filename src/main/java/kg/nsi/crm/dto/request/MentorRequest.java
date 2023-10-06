@@ -1,14 +1,17 @@
 package kg.nsi.crm.dto.request;
-
-import lombok.Builder;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public record MentorRequest (
-        String firstName,
-        String lastName,
-        String email,
-        Boolean isBillable
-){
+public class MentorRequest {
+        String firstName;
+        String lastName;
+        String email;
+        List<Long> stackIds;
+        Boolean isBillable;
 }
