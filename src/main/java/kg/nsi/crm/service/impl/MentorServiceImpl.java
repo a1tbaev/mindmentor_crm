@@ -1,10 +1,12 @@
 package kg.nsi.crm.service.impl;
 
-import
-        jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional;
+import kg.nsi.crm.dto.ExperienceDto;
 import kg.nsi.crm.dto.request.MentorRequest;
+import kg.nsi.crm.dto.request.MentorUpdRequest;
 import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.ExtractedDataDto;
+import kg.nsi.crm.dto.response.MentorResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.entity.Mentor;
@@ -21,9 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -36,35 +35,81 @@ public class MentorServiceImpl implements MentorService {
     private final InternRepository internRepository;
     private final PdfParserService pdfParserService;
 
-    @Override
-    public ExtractedDataDto getExtractedDataFromCv(@NotNull MentorRequest mentorRequest, MultipartFile file) {
+    @Override //save button
+    public SimpleResponse saveExtractedDataFromCv(@NotNull MentorRequest mentorRequest, MultipartFile file) {
 
         ExtractedDataDto extractedDataDto =  pdfParserService.parse(file);
+        System.out.println(extractedDataDto.getExperience());
 
-        extractedDataDto.setFirstName(mentorRequest.firstName());
-        extractedDataDto.setLastName(mentorRequest.lastName());
+        Set<Stack> set = new HashSet<>();
 
-        List<Stack> mentorStacks = stackRepository.findAll();
-        Set<String> stackNames = new HashSet<>();
-
-        ArrayList<String> sNames = new ArrayList<>();
-
-        for(Stack stack: mentorStacks){
-            stackNames.add(stack.getName());
-        }
-
-        Set<Stack> stacks = new HashSet<>();
-        for(String stack: extractedDataDto.getStack()){
-            for(String stackName: stackNames){
-                if(stack.toUpperCase().contains(stackName.toUpperCase())){
-                    mentorStacks.add(stackRepository.findByName(stack));
-                    if(!sNames.contains(stackName)) sNames.add(stackName);
-                }
-
+        if(mentorRequest.getStackIds() != null) {
+            for (Long id : mentorRequest.getStackIds()) {
+                set.add(stackRepository.getById(id));
             }
         }
-        extractedDataDto.setStack(sNames);
-        return extractedDataDto;
+
+
+        String education = "";
+        if(extractedDataDto.getEducation() != null) {
+            for (String ed : extractedDataDto.getEducation()) {
+                education = education + ed + System.lineSeparator();
+            }
+        }
+        String experience = "";
+        if(extractedDataDto.getExperience() != null) {
+
+            for (ExperienceDto exp : extractedDataDto.getExperience()) {
+
+                experience = experience + " " + exp.getJobTitle() + " "
+                        + exp.getCompany() + " " + exp.getDescription()
+                        + " " + exp.getLocation() + System.lineSeparator();
+            }
+        }
+
+        String skills = "";
+        if(extractedDataDto.getStack() != null) {
+            for (String skill : extractedDataDto.getStack()) {
+
+                skills = skills + skill + System.lineSeparator();
+            }
+        }
+
+        Mentor mentor = Mentor.builder()
+                .firstName(mentorRequest.getFirstName())
+                .lastName(mentorRequest.getLastName())
+                .email(mentorRequest.getEmail())
+                .isBillable(mentorRequest.getIsBillable())
+                .education(education)
+                .experience(experience)
+                .stacks(set)
+                .skills(skills)
+                .build();
+
+        mentorRepository.save(mentor);
+
+
+//        List<Stack> mentorStacks = stackRepository.findAll();
+//        Set<String> stackNames = new HashSet<>();
+//
+//        ArrayList<String> sNames = new ArrayList<>();
+//
+//        for(Stack stack: mentorStacks){
+//            stackNames.add(stack.getName());
+//        }
+//
+//        Set<Stack> stacks = new HashSet<>();
+//        for(String stack: extractedDataDto.getStack()){
+//            for(String stackName: stackNames){
+//                if(stack.toUpperCase().contains(stackName.toUpperCase())){
+//                    mentorStacks.add(stackRepository.findByName(stack));
+//                    if(!sNames.contains(stackName)) sNames.add(stackName);
+//                }
+//
+//            }
+//        }
+//        extractedDataDto.setStack(sNames);
+        return new SimpleResponse("The mentor saved succesfully", HttpStatus.OK);
     }
 
     @Override
@@ -94,31 +139,55 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public SimpleResponse updateMentor(Long id, MentorRequest newMentor) {
+    public SimpleResponse updateMentor(Long id, MentorUpdRequest newMentor) {
+
         Mentor oldMentor = mentorRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("Mentor with id %s not found!", id)));
-        if (newMentor.firstName() != null) oldMentor.setFirstName(newMentor.firstName());
-        if (newMentor.lastName() != null) oldMentor.setLastName(newMentor.lastName());
-        if (newMentor.email() != null) oldMentor.setEmail(newMentor.email());
-        if (newMentor.isBillable() != null) oldMentor.setIsBillable(newMentor.isBillable());
-        //method(newMentor.stackIDies(),oldMentor);
+
+
+
+        if (newMentor.getFirstname() != null) oldMentor.setFirstName(newMentor.getFirstname());
+        if (newMentor.getLastname() != null) oldMentor.setLastName(newMentor.getLastname());
+        if (newMentor.getEmail() != null) oldMentor.setEmail(newMentor.getEmail());
+        if(newMentor.isBillable()){
+            oldMentor.setIsBillable(true);
+        }
+        else {
+            oldMentor.setIsBillable(false);
+        }
+        if(newMentor.getExperience() != null) oldMentor.setExperience(newMentor.getExperience());
+        if(newMentor.getEducation() != null) oldMentor.setEducation(newMentor.getEducation());
+
+        if(newMentor.getSkills() != null) oldMentor.setSkills(newMentor.getSkills());
+
+        if(newMentor.getStackIds() != null)
+        {
+            HashSet<Stack> set = new HashSet<>();
+            for(Long stackId: newMentor.getStackIds()){
+                set.add(stackRepository.getById(stackId));
+            }
+            oldMentor.setStacks(set);
+        }
+
         mentorRepository.save(oldMentor);
         return new SimpleResponse("The mentor successfully updated!", HttpStatus.OK);
     }
 
     @Override
-    public SimpleResponse createMentor(UpdatedMentorRequest updatedMentorRequest) {
-            Mentor mentor = MentorMapper.toEntity(updatedMentorRequest);
-            Set<Stack> stacks = new HashSet<>();
+    public MentorResponse getMentor(Long mentorId) {
+        Mentor mentor = mentorRepository.getById(mentorId);
+        return MentorMapper.toResponse(mentor);
 
-            for(String name: updatedMentorRequest.stacks()){
-                stacks.add(stackRepository.findByName(name));
-            }
+    }
 
+    @Override
+    public List<MentorResponse> getAll() {
+        List<Mentor> mentors = mentorRepository.findAll();
+        List<MentorResponse> mentorResponses = new ArrayList<>();
 
-            mentor.setStacks(stacks);
-
-            mentorRepository.save(mentor);
-        return new SimpleResponse("The mentor is created!", HttpStatus.OK);
+        for(Mentor mentor: mentors){
+            mentorResponses.add(MentorMapper.toResponse(mentor));
+        }
+        return mentorResponses;
     }
 }

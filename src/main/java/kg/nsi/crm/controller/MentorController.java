@@ -1,19 +1,17 @@
 package kg.nsi.crm.controller;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.nsi.crm.dto.request.MentorRequest;
-import kg.nsi.crm.dto.request.UpdatedMentorRequest;
-import kg.nsi.crm.dto.response.ExtractedDataDto;
+import kg.nsi.crm.dto.request.MentorUpdRequest;
+import kg.nsi.crm.dto.response.MentorResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
-
-import kg.nsi.crm.repository.MentorRepository;
-import kg.nsi.crm.repository.StackRepository;
 import kg.nsi.crm.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,16 +20,26 @@ import org.springframework.web.multipart.MultipartFile;
 public class MentorController {
 
     private final MentorService mentorService;
-    private final MentorRepository mentorRepository;
-    private final StackRepository stackRepository;
 
-    @Operation(summary = "Extracting the mentor's data from CV", description = "This method is to extract info from CV")
-    @GetMapping(name = "/getExtractedData",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ExtractedDataDto getExtractedDataFromCv(@RequestParam("file") MultipartFile file, @ModelAttribute MentorRequest mentorRequest){
+    @Operation(summary = "Create a new mentor", description = "Create a new mentor")
+    @PostMapping(name = "/saveExtractedData",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public SimpleResponse saveExtractedDataFromCv(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam("name") String name,
+                                                  @RequestParam("lastname") String lastname,
+                                                  @RequestParam("email") String email,
+                                                  @RequestParam("isBillable") boolean isBillable,
+                                                  @RequestParam("stackIds") List<Long> stackIds){
 
-        return mentorService.getExtractedDataFromCv(mentorRequest,file);
+        System.out.println(name);
+        MentorRequest mentorRequest = MentorRequest.builder()
+                .firstName(name)
+                .lastName(lastname)
+                .email(email)
+                .isBillable(isBillable)
+                .stackIds(stackIds)
+                .build();
+        return mentorService.saveExtractedDataFromCv(mentorRequest,file);
     }
-
 
     @DeleteMapping
     @Operation(summary = "Delete the mentor", description = "This method to delete the mentor by id")
@@ -41,14 +49,20 @@ public class MentorController {
 
     @PutMapping
     @Operation(summary = "Update mentor", description = "This method to update mentor!")
-    public SimpleResponse updateMentor(@RequestBody MentorRequest request,@RequestParam Long mentorId){
+    public SimpleResponse updateMentor(@RequestBody MentorUpdRequest request, @RequestParam Long mentorId){
         return mentorService.updateMentor(mentorId,request);
     }
 
-    @Operation(summary = "Create a new mentor", description = "This method is to create a new mentor!")
-    @PostMapping
-    public SimpleResponse createMentor(@RequestBody UpdatedMentorRequest updatedMentorRequest){
-        return mentorService.createMentor(updatedMentorRequest);
+    @Operation(summary = "Get mentor's info", description = "This method is to get a mentor!")
+    @GetMapping
+    public MentorResponse getMentor(@RequestParam Long mentorId){
+        return mentorService.getMentor(mentorId);
+    }
+
+    @Operation(summary = "Get all the mentors", description = "This method is to get all the mentors!")
+    @GetMapping("/getAll")
+    public List<MentorResponse> getAll(){
+        return mentorService.getAll();
     }
 
 
