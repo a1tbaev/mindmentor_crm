@@ -1,20 +1,14 @@
 package kg.nsi.crm.dto;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import kg.nsi.crm.entity.base.BaseEntity;
 import kg.nsi.crm.enums.InternStatus;
-import kg.nsi.crm.enums.Role;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -23,27 +17,27 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 public class InternDto{
 
-	Long id;
+    private Long id;
 
-    LocalDate creationDate;
+    private LocalDate creationDate;
 
-    LocalDate updateDate;
+    private LocalDate updateDate;
 
-	String firstName;
-    
-	String lastName;
-    
-	String email;
-    
-	String phoneNumber;
-    
-    Boolean isPaidForFirstMonth;
-    Boolean isPaidForSecondMonth;
-    Boolean isPaidForThirdMonth;
-    GroupDto groupDto;
-    String stack;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private Boolean isPaidForFirstMonth;
+    private Boolean isPaidForSecondMonth;
+    private Boolean isPaidForThirdMonth;
+    private GroupDto groupDto;
+    private String stack;
 
     @Enumerated(EnumType.STRING)
-    InternStatus internStatus;
+    private InternStatus internStatus;
    
 }
