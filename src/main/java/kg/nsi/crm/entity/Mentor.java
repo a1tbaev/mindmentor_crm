@@ -29,8 +29,8 @@ public class Mentor extends BaseEntity {
     @Column(name = "email")
     String email;
 
-//    @Column(name = "phone_number", nullable = false)
-//    String phoneNumber;
+    @Column(name = "phone_number", nullable = false)
+    String phoneNumber;
 
     @Column(name = "is_billable")
     Boolean isBillable;

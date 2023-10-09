@@ -15,7 +15,7 @@ insert into stacks (id, creation_date, update_date, name)
 VALUES (1, '2023-02-01', '2023-04-01', 'java'),
        (2, '2023-02-01', '2023-04-01', 'js');
 
-insert into mentors (id, creation_date, update_date, email, first_name, is_billable, last_name, experience, education, skills)
+insert into mentors (id, creation_date, update_date, email, first_name, is_billable, last_name, experience, education, skills,phone_number)
 VALUES (1, '2023-02-01', '2023-04-01', 'mentor1@gmail.com', 'name1', 'true', 'last_name', ' Frontend Developer PEAKSOFT academy', 'PEAKSOFT academy', 'Integration
 Github
 Library
@@ -27,8 +27,8 @@ Eslint
 Application Programming Interface (API)
 React.js
 TypeScript
-'),
-       (2, '2023-02-01', '2023-04-01', 'mentor2@gmail.com', 'name2', 'true', 'last_name2','ItSoft', 'KN University', 'Java, js,Python');
+', '0777897856'),
+       (2, '2023-02-01', '2023-04-01', 'mentor2@gmail.com', 'name2', 'true', 'last_name2','ItSoft', 'KN University', 'Java, js,Python','0776563478');
 
 insert into mentors_stacks (mentor_id, stack_id)
 VALUES (1, 1),
