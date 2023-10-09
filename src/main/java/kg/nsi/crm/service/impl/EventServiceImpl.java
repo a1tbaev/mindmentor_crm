@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.*;
@@ -117,10 +116,8 @@ public class EventServiceImpl implements EventService {
     public List<EventResponse> getEventsForWeekAfter(LocalDate date) {
         LocalDate startOfNextWeek = date.plusWeeks(1);
 
-        // Calculate the end date of the next week
         LocalDate endOfNextWeek = startOfNextWeek.plusDays(6);
 
-        // Filter events that will occur within the next week
         List<EventResponse> events = eventRepository.findAll()
                 .stream()
                 .filter(event -> {
@@ -139,6 +136,16 @@ public class EventServiceImpl implements EventService {
         System.out.println(event.getMeetingName());
         eventRepository.delete(event);
         return new SimpleResponse("Event deleted successfully!", HttpStatus.OK);
+    }
+
+    @Override
+    public List<EventResponse> getAll() {
+        List<EventResponse> events = new ArrayList<>();
+
+        for(Event event: eventRepository.findAll()){
+            events.add(EventMapper.toDto(event));
+        }
+        return events;
     }
 
 
