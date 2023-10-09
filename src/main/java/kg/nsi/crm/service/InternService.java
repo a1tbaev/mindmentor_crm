@@ -16,4 +16,5 @@ public interface InternService {
 	List<InternResponse> getAll(PageRequest pageRequest);
 	SimpleResponse deleteInternById(Long id);
 	SimpleResponse updateIntern(InternDto intern);
+	List<InternResponse> getInternsByName(String name);
 }

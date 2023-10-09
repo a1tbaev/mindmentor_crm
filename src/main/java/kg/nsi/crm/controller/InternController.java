@@ -55,4 +55,10 @@ public class InternController {
 									   @RequestParam(required = false, defaultValue = "10") int size){
 		return iServiceImpl.getAll(PageRequest.of(page, size));
 	}
+
+	@GetMapping("/getByName")
+	@Operation(summary = "Get all intern", description = "This method to get all interns by name")
+	public List<InternResponse> getInternsByName(String name){
+		return iServiceImpl.getInternsByName(name);
+	}
 }
