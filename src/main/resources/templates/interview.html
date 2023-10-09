@@ -4,70 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interview Details</title>
-<!--  <style>-->
-<!--    /* Reset default styles */-->
-<!--    body, h2, p, ul, li {-->
-<!--      margin: 0;-->
-<!--      padding: 0;-->
-<!--    }-->
+  <style>
+    /* Reset default styles */
+    body, h2, p, ul, li {
+      margin: 0;
+      padding: 0;
+    }
 
-<!--    /* Apply a background color */-->
-<!--    body {-->
-<!--      background-color: #f7f7f7;-->
-<!--      font-family: Arial, sans-serif;-->
-<!--      line-height: 1.6;-->
-<!--    }-->
+    /* Apply a background color */
+    body {
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
 
-<!--    /* Center content */-->
-<!--    .container {-->
-<!--      max-width: 600px;-->
-<!--      margin: 0 auto;-->
-<!--      padding: 20px;-->
-<!--      background-color: #ffffff;-->
-<!--      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
-<!--      border-radius: 5px;-->
-<!--    }-->
+    /* Center content */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
 
-<!--    /* Style the header */-->
-<!--    h2 {-->
-<!--      background-color: #3498db;-->
-<!--      color: #fff;-->
-<!--      text-align: center;-->
-<!--      padding: 10px 0;-->
-<!--      margin-bottom: 20px;-->
-<!--    }-->
+    /* Style the header */
+    h2 {
+      background-color: #3498db;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      margin-bottom: 20px;
+    }
 
-<!--    /* Style the content */-->
-<!--    .content {-->
-<!--      padding: 20px;-->
-<!--    }-->
+    /* Style the content */
+    .content {
+      padding: 20px;
+    }
 
-<!--    /* Style the list */-->
-<!--    ul {-->
-<!--      list-style-type: none;-->
-<!--      padding-left: 20px;-->
-<!--    }-->
+    /* Style the list */
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
 
-<!--    /* Add some spacing */-->
-<!--    .space {-->
-<!--      margin-bottom: 20px;-->
-<!--    }-->
+    /* Add some spacing */
+    .space {
+      margin-bottom: 20px;
+    }
 
-<!--    /* Style the strong elements */-->
-<!--    strong {-->
-<!--      color: #3498db;-->
-<!--    }-->
-<!--  </style>-->
+    /* Style the strong elements */
+    strong {
+      color: #3498db;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
   <h2>Interview Details</h2>
   <div class="content">
-    <p th:text="${name}">Dear [name],</p>
+    <p th:text="${name}">Dear [[name]],</p>
     <p>You have been scheduled for an interview:</p>
     <ul>
-      <p th:text="${interviewName}">Interview name: [Имя получателя]!</p>
-      <p th:text="${interviewDate}">Date: [date]!</p>
+      <p th:text="${interviewName}">Interview name: [[Имя получателя]]!</p>
+      <p th:text="${interviewDate}">Date: [[date]]!</p>
       <p th:text="${startTime}">String Time: [time]!</p>
       <p th:text="${endTime}">End Time: [time]!</p>
       <p th:text="${location}">Location: [location]!</p>
