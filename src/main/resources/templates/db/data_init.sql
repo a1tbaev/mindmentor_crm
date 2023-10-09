@@ -15,9 +15,20 @@ insert into stacks (id, creation_date, update_date, name)
 VALUES (1, '2023-02-01', '2023-04-01', 'java'),
        (2, '2023-02-01', '2023-04-01', 'js');
 
-insert into mentors (id, creation_date, update_date, email, first_name, is_billable, last_name)
-VALUES (1, '2023-02-01', '2023-04-01', 'mentor1@gmail.com', 'name1', 'true', 'last_name'),
-       (2, '2023-02-01', '2023-04-01', 'mentor2@gmail.com', 'name2', 'true', 'last_name2');
+insert into mentors (id, creation_date, update_date, email, first_name, is_billable, last_name, experience, education, skills)
+VALUES (1, '2023-02-01', '2023-04-01', 'mentor1@gmail.com', 'name1', 'true', 'last_name', ' Frontend Developer PEAKSOFT academy', 'PEAKSOFT academy', 'Integration
+Github
+Library
+Cascading Style Sheets (CSS)
+Web Applications
+React Redux
+JavaScript (Programming Language)
+Eslint
+Application Programming Interface (API)
+React.js
+TypeScript
+'),
+       (2, '2023-02-01', '2023-04-01', 'mentor2@gmail.com', 'name2', 'true', 'last_name2','ItSoft', 'KN University', 'Java, js,Python');
 
 insert into mentors_stacks (mentor_id, stack_id)
 VALUES (1, 1),
