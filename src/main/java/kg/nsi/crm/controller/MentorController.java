@@ -28,15 +28,16 @@ public class MentorController {
                                                   @RequestParam("lastname") String lastname,
                                                   @RequestParam("email") String email,
                                                   @RequestParam("isBillable") boolean isBillable,
-                                                  @RequestParam("stackIds") List<Long> stackIds){
+                                                  @RequestParam("stackIds") List<Long> stackIds,
+                                                  @RequestParam("phoneNumber") String phoneNumber){
 
-        System.out.println(name);
         MentorRequest mentorRequest = MentorRequest.builder()
                 .firstName(name)
                 .lastName(lastname)
                 .email(email)
                 .isBillable(isBillable)
                 .stackIds(stackIds)
+                .phoneNumber(phoneNumber)
                 .build();
         return mentorService.saveExtractedDataFromCv(mentorRequest,file);
     }

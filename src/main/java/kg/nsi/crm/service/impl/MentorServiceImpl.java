@@ -84,6 +84,7 @@ public class MentorServiceImpl implements MentorService {
                 .experience(experience)
                 .stacks(set)
                 .skills(skills)
+                .phoneNumber(mentorRequest.getPhoneNumber())
                 .build();
 
         mentorRepository.save(mentor);
