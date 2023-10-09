@@ -23,6 +23,7 @@ public class StackServiceImpl implements StackService{
 	
 	@Override
 	public SimpleResponse createStack(Stack stack) {
+		stackRepository.save(stack);
 		return new SimpleResponse( "The stack created successfully", HttpStatus.OK);
 	}
 
