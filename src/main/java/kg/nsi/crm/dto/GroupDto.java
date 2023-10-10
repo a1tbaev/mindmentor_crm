@@ -11,6 +11,7 @@ public record GroupDto (
 		String name,
 		LocalDate startDate,
 		LocalDate finishDate,
+		int numberOfStudents,
 		GroupStatus groupStatus
 ){
 }

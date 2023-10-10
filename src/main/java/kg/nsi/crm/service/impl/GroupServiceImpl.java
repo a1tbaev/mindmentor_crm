@@ -107,6 +107,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public List<GroupDto> getAll() {
+        List<Group> groups = groupRepository.findAll();
+        List<GroupDto> groupDtos = new ArrayList<>();
+
+        for(Group group: groups){
+            groupDtos.add(GroupMapper.toDto(group));
+        }
+        return groupDtos;
+    }
+
+    @Override
     public List<EventResponse> getAllEvents(Long groupId) {
         List<Event> events = eventRepository.getAllEventsByGroupId(groupId);
         List<EventResponse> allEvents = new ArrayList<>();

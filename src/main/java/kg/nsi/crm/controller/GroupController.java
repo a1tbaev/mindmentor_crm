@@ -44,6 +44,11 @@ public class GroupController {
 	SimpleResponse update(@PathVariable Long groupId, @RequestBody GroupRequest groupRequest){
 		return groupService.update(groupId, groupRequest);
 	}
+	@Operation(summary = "Get all the groups", description = "This method is to get all the groups")
+	@GetMapping("/")
+	public List<GroupDto> getAll(){
+		return groupService.getAll();
+	}
 
 	@Operation(summary = "Get group's all the events", description = "Get group's all the events")
 	@GetMapping("/events/{groupId}")
