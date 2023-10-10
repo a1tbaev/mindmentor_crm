@@ -26,6 +26,7 @@ public class GroupMapper {
 				.startDate(group.getStartDate())
 				.finishDate(group.getFinishDate())
 				.groupStatus(group.getGroupStatus())
+				.numberOfStudents(group.getInterns().size())
 				.build();
 	}
 }
