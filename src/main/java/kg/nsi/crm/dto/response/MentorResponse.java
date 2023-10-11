@@ -18,5 +18,6 @@ public class MentorResponse {
     String skills;
     String education;
     String experience;
+    String phoneNumber;
     boolean isBillable;
 }
