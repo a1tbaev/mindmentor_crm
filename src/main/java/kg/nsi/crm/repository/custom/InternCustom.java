@@ -4,6 +4,7 @@ public class InternCustom {
     public String getAllQuery(){
         return  """
                 SELECT
+                    i.id AS id,
                     i.first_name AS first_name,
                     i.last_name AS last_name,
                     CASE
@@ -17,7 +18,6 @@ public class InternCustom {
                 LEFT JOIN groups g ON g.id = i.group_id
                 JOIN stacks s ON s.id = i.stack_id
                 FULL JOIN mentors m ON m.id = i.mentor_id;
-                ;
                 """;
     }
 }
