@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/groups")
 @Tag(name = "Group", description = "The Group API")
 @RequiredArgsConstructor
-public class GroupController {
+public class  GroupController {
 	
 	private final GroupService groupService;
 

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 @RestController
@@ -40,6 +39,7 @@ public class MentorController {
                 .phoneNumber(phoneNumber)
                 .build();
         return mentorService.saveExtractedDataFromCv(mentorRequest,file);
+
     }
 
     @DeleteMapping
@@ -65,8 +65,4 @@ public class MentorController {
     public List<MentorResponse> getAll(){
         return mentorService.getAll();
     }
-
-
-
-
 }

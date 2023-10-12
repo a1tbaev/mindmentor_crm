@@ -51,6 +51,7 @@ public class MentorMapper {
                 .skills(mentor.getSkills())
                 .education(mentor.getEducation())
                 .experience(mentor.getExperience())
+                .phoneNumber(mentor.getPhoneNumber())
                 .isBillable(mentor.getIsBillable())
                 .build();
     }
