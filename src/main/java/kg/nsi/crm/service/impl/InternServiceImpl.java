@@ -48,17 +48,23 @@ public class InternServiceImpl implements InternService {
         Stack stack = stackRepository.findById(internRequest.stackId()).orElseThrow(
                 () -> new NotFoundException(String.format("Stack with id %s is not found!", internRequest.stackId())));
 
-        internRepository.save(InternMapper.toDto(internRequest, mentor, stack));
+        Intern internToSave = InternMapper.toDto(internRequest, mentor, stack);
+        internRepository.save(internToSave);
 
-        Intern internByEmail = internRepository.getInternByEmail(internRequest.email());
-        historyGeneratorService.forSave(HistoryResponse.builder()
-                        .message("Intern has been registered")
-                .build(), internByEmail.getId());
+        // Make sure that internToSave is not null before trying to get its ID
+        if (internToSave != null) {
+            historyGeneratorService.forSave(HistoryResponse.builder()
+                    .message("Intern has been registered")
+                    .build(), internToSave.getId());
+        } else {
+            return new SimpleResponse("!!!problem!!!", HttpStatus.BAD_REQUEST);
+        }
 
         return new SimpleResponse("The intern created successfully", HttpStatus.OK);
     }
 
-	@Override
+
+    @Override
 	public InternDto getInternById(Long id) {
 		Intern intern = internRepository.findById(id).orElseThrow();
 		paymentService.processPayment(intern);

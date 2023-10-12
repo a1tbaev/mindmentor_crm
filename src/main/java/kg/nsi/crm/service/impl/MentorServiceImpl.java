@@ -88,28 +88,6 @@ public class MentorServiceImpl implements MentorService {
                 .build();
 
         mentorRepository.save(mentor);
-
-
-//        List<Stack> mentorStacks = stackRepository.findAll();
-//        Set<String> stackNames = new HashSet<>();
-//
-//        ArrayList<String> sNames = new ArrayList<>();
-//
-//        for(Stack stack: mentorStacks){
-//            stackNames.add(stack.getName());
-//        }
-//
-//        Set<Stack> stacks = new HashSet<>();
-//        for(String stack: extractedDataDto.getStack()){
-//            for(String stackName: stackNames){
-//                if(stack.toUpperCase().contains(stackName.toUpperCase())){
-//                    mentorStacks.add(stackRepository.findByName(stack));
-//                    if(!sNames.contains(stackName)) sNames.add(stackName);
-//                }
-//
-//            }
-//        }
-//        extractedDataDto.setStack(sNames);
         return new SimpleResponse("The mentor saved succesfully", HttpStatus.OK);
     }
 
