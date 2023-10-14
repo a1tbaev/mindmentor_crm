@@ -2,7 +2,7 @@ insert into users (id, creation_date, update_date, password, role, user_name)
 values (1, '2023-02-01', '2023-04-01', '$2a$12$Dk5.myewTKPGpVXCiu0nmOY8tf8DostKvERCY65TLaw/dG57jiWpm', 'SUPERADMIN',
         'superadmin@gmail.com'),
        (2, '2023-02-02', '2023-04-02', '$2a$12$9p6Me6viqzXWZILyhUOjE.a/lCJeAydhHH5SJ.zVyjMyB9uMhkKpa', 'MANAGER',
-        'menagar@gmail.com');
+        'manager@gmail.com');
 --superadmin123
 --manager123
 
