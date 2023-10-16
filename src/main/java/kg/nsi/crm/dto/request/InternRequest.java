@@ -5,7 +5,7 @@ import kg.nsi.crm.validation.PhoneNumberValid;
 import lombok.Builder;
 
 @Builder
-public record InternRequest (
+public record  InternRequest (
         String name,
         String surname,
         String email,

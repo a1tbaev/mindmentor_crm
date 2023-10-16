@@ -7,6 +7,7 @@ import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Event;
 import kg.nsi.crm.entity.Intern;
+import kg.nsi.crm.enums.GroupStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.mapper.EventMapper;
 import kg.nsi.crm.mapper.GroupMapper;
@@ -107,12 +108,14 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupDto> getAll() {
+    public List<GroupDto> getAll(String groupStatus) {
         List<Group> groups = groupRepository.findAll();
         List<GroupDto> groupDtos = new ArrayList<>();
 
         for(Group group: groups){
+            if (group.getGroupStatus().equals(GroupStatus.valueOf(groupStatus.toUpperCase()))){
             groupDtos.add(GroupMapper.toDto(group));
+            }
         }
         return groupDtos;
     }

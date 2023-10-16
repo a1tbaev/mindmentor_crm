@@ -13,7 +13,7 @@ public interface GroupService {
 	SimpleResponse delete(Long groupId);
 	SimpleResponse update(Long groupId, GroupRequest groupRequest);
 
-	List<GroupDto> getAll();
+	List<GroupDto> getAll(String groupStatus);
 
 	List<EventResponse> getAllEvents(Long groupId);
 }
