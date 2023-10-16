@@ -34,7 +34,7 @@ public class Vendor {
     @Column(name = "contact_number")
     String contactNumber;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 50000)
     String image;
 
     @Column(name = "information")
