@@ -8,10 +8,12 @@ import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.dto.response.HistoryResponse;
+import kg.nsi.crm.entity.History;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.enums.InternStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
+import kg.nsi.crm.repository.HistoryRepository;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
 import kg.nsi.crm.repository.custom.InternCustom;
@@ -41,6 +43,7 @@ public class InternServiceImpl implements InternService {
     final StackRepository stackRepository;
     final PaymentService paymentService;
     final HistoryGeneratorService historyGeneratorService;
+    final HistoryRepository historyRepository;
 
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
@@ -80,6 +83,10 @@ public class InternServiceImpl implements InternService {
         intern.setMentor(null);
         intern.setStack(null);
         intern.setGroup(null);
+
+        History history = historyGeneratorService.findHistoryByInternId(id);
+
+        history.setIntern(null);
         internRepository.save(intern);
         internRepository.delete(intern);
 		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
