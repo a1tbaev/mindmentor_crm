@@ -57,8 +57,16 @@ public class InternController {
 	}
 
 	@GetMapping("/getByName")
-	@Operation(summary = "Get all intern", description = "This method to get all interns by name")
+	@Operation(summary = "Get all interns by name", description = "This method is to get all interns by name")
 	public List<InternResponse> getInternsByName(String name){
 		return iServiceImpl.getInternsByName(name);
 	}
+
+	@GetMapping("/getAllSortedByGroup")
+	@Operation(summary = "Get all interns sorted by group", description = "This method is to get all interns sorted by group")
+	public List<InternResponse> findAllInternsSortedByGroup(){
+		return iServiceImpl.findAllInternsSortedByGroupName();
+	}
+
+
 }

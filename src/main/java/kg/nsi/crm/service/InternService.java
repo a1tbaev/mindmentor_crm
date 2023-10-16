@@ -6,6 +6,7 @@ import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.entity.Intern;
 import org.springframework.data.domain.PageRequest;
 
 public interface InternService {
@@ -17,4 +18,6 @@ public interface InternService {
 	SimpleResponse deleteInternById(Long id);
 	SimpleResponse updateIntern(InternDto intern);
 	List<InternResponse> getInternsByName(String name);
+
+	List<InternResponse> findAllInternsSortedByGroupName();
 }
