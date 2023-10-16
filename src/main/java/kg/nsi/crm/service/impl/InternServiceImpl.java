@@ -2,6 +2,8 @@ package kg.nsi.crm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
@@ -135,6 +137,31 @@ public class InternServiceImpl implements InternService {
             internResponse.setFirstName(intern.getFirstName());
             internResponse.setLastName(intern.getLastName());
             internResponse.setStackName(intern.getStack().getName());
+            internResponses.add(internResponse);
+        }
+        return internResponses;
+    }
+
+    public static List<Intern> sort(List<Intern> interns){
+
+        return interns.stream()
+                .sorted((s1, s2) -> s1.getGroup().getName().compareTo(s2.getGroup().getName()))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<InternResponse> findAllInternsSortedByGroupName() {
+        List<Intern> interns = internRepository.findAll();
+        List<InternResponse> internResponses = new ArrayList<>();
+
+        for (Intern intern : sort(interns)) {
+            InternResponse internResponse = new InternResponse();
+            internResponse.setId(intern.getId());
+            internResponse.setFirstName(intern.getFirstName());
+            internResponse.setLastName(intern.getLastName());
+            internResponse.setStackName(intern.getStack().getName());
+            internResponse.setGroupName(intern.getGroup().getName());
+            internResponse.setMentorName(intern.getMentor().getFirstName() + " " + intern.getMentor().getLastName());
+            internResponse.setInternStatus(intern.getInternStatus());
             internResponses.add(internResponse);
         }
         return internResponses;
