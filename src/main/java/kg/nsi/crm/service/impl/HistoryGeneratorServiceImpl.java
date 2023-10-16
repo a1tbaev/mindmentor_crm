@@ -18,6 +18,7 @@ public class HistoryGeneratorServiceImpl implements HistoryGeneratorService {
     private final HistoryRepository historyRepository;
     private final InternRepository internRepository;
 
+
     @Override
     public void forSave(HistoryResponse historyResponse, Long internId) {
         History history = HistoryMapper.toEntity(historyResponse);
@@ -28,4 +29,13 @@ public class HistoryGeneratorServiceImpl implements HistoryGeneratorService {
         historyRepository.save(history);
     }
 
+    @Override
+    public History findHistoryByInternId(Long id) {
+        return historyRepository.getByInternId(id);
+    }
+
+    @Override
+    public void deleteAllByInternId(Long id) {
+        historyRepository.deleteAllByInternId(id);
+    }
 }
