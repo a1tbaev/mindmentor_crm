@@ -85,8 +85,7 @@ public class InternServiceImpl implements InternService {
         intern.setGroup(null);
 
         History history = historyGeneratorService.findHistoryByInternId(id);
-
-        history.setIntern(null);
+        if(history != null) history.setIntern(null);
         internRepository.save(intern);
         internRepository.delete(intern);
 		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
