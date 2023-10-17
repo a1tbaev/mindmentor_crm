@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class InternResponse {
@@ -16,4 +15,14 @@ public class InternResponse {
     private String stackName;
     private InternStatus internStatus;
     private String mentorName;
+
+    public InternResponse(Long id, String firstName, String lastName, String groupName, String stackName, InternStatus internStatus, String mentorName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.groupName = groupName;
+        this.stackName = stackName;
+        this.internStatus = internStatus;
+        this.mentorName = mentorName;
+    }
 }
