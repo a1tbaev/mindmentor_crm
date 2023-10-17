@@ -12,9 +12,9 @@ VALUES (1, '2023-02-01', '2023-04-01', '2024-02-01', 'ACTIVE', 'JAVA-1', '2023-0
        (3, '2023-02-01', '2023-04-01', '2024-02-01', 'ACTIVE', 'PYTHON-1', '2023-02-06');
 
 insert into stacks (id, creation_date, update_date, name)
-VALUES (1, '2023-02-01', '2023-04-01', 'Java (Spring Boot)'),
-       (2, '2023-02-01', '2023-04-01', 'Java Script (React)'),
-       (3, '2023-02-01', '2023-04-01', 'Python (Django)');
+VALUES (1, '2023-02-01', '2023-04-01', 'Java'),
+       (2, '2023-02-01', '2023-04-01', 'Java Script'),
+       (3, '2023-02-01', '2023-04-01', 'Python');
 
 INSERT INTO mentors (id, creation_date, update_date, email, first_name, is_billable, last_name, experience, education, skills, phone_number)
 VALUES

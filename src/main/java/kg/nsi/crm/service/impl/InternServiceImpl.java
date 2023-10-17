@@ -113,7 +113,16 @@ public class InternServiceImpl implements InternService {
 
     @Override
     public List<InternResponse> getAll(PageRequest pageRequest) {
-        return internRepository.getAll();
+        return jdbcTemplate.query(new InternCustom().getAllQuery(), (resultSet, i)
+                -> new InternResponse(
+                resultSet.getLong("id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("group_name"),
+                resultSet.getString("stack"),
+                InternStatus.valueOf(resultSet.getString("status")),
+                resultSet.getString("mentor_name")
+        ));
     }
 
     @Override
