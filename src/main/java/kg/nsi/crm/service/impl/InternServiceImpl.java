@@ -11,12 +11,10 @@ import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.entity.History;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
-import kg.nsi.crm.enums.InternStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.HistoryRepository;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
-import kg.nsi.crm.repository.custom.InternCustom;
 import kg.nsi.crm.service.HistoryGeneratorService;
 import kg.nsi.crm.service.PaymentService;
 import org.springframework.data.domain.PageRequest;
@@ -39,14 +37,15 @@ public class InternServiceImpl implements InternService {
 
     final InternRepository internRepository;
     final MentorRepository mentorRepository;
-    final JdbcTemplate jdbcTemplate;
     final StackRepository stackRepository;
     final PaymentService paymentService;
     final HistoryGeneratorService historyGeneratorService;
-    final HistoryRepository historyRepository;
 
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
+
+        if (internRepository.existsByEmail(internRequest.email()))
+            return new SimpleResponse("Intern with which email already exists", HttpStatus.BAD_REQUEST);
 
         Mentor mentor = mentorRepository.findById(internRequest.mentorId()).orElseThrow(
                 () -> new NotFoundException(String.format("Mentor with id %s is not found!", internRequest.mentorId())));
@@ -70,14 +69,14 @@ public class InternServiceImpl implements InternService {
 
 
     @Override
-	public InternDto getInternById(Long id) {
-		Intern intern = internRepository.findById(id).orElseThrow();
-		paymentService.processPayment(intern);
-		return getInternEntityById(id);
-	}
+    public InternDto getInternById(Long id) {
+        Intern intern = internRepository.findById(id).orElseThrow();
+        paymentService.processPayment(intern);
+        return getInternEntityById(id);
+    }
 
-	@Override
-	public 	SimpleResponse deleteInternById(Long id) {
+    @Override
+    public SimpleResponse deleteInternById(Long id) {
         Intern intern = internRepository.getInternById(id);
 
         intern.setMentor(null);
@@ -85,25 +84,25 @@ public class InternServiceImpl implements InternService {
         intern.setGroup(null);
 
         History history = historyGeneratorService.findHistoryByInternId(id);
-        if(history != null) history.setIntern(null);
+        if (history != null) history.setIntern(null);
         internRepository.save(intern);
         internRepository.delete(intern);
-		return new SimpleResponse( "The intern deleted successfully", HttpStatus.OK);
-	}
+        return new SimpleResponse("The intern deleted successfully", HttpStatus.OK);
+    }
 
-	@Override
-	public SimpleResponse updateIntern(InternDto internRequest) {
-		Intern intern = this.internRepository.getInternById(internRequest.getId());
+    @Override
+    public SimpleResponse updateIntern(InternDto internRequest) {
+        Intern intern = this.internRepository.getInternById(internRequest.getId());
 
-		if(internRequest.getFirstName()!= null)	intern.setFirstName(internRequest.getFirstName());
-		if(internRequest.getLastName()!=null) intern.setLastName(internRequest.getLastName());
-		if(internRequest.getEmail()!=null) intern.setEmail(internRequest.getEmail());
-		if(internRequest.getPhoneNumber()!=null) intern.setPhoneNumber(internRequest.getPhoneNumber());
-		if(internRequest.getInternStatus()!=null) intern.setInternStatus(internRequest.getInternStatus());
-		if(internRequest.getUpdateDate()!=null) intern.setUpdateDate(internRequest.getUpdateDate());
+        if (internRequest.getFirstName() != null) intern.setFirstName(internRequest.getFirstName());
+        if (internRequest.getLastName() != null) intern.setLastName(internRequest.getLastName());
+        if (internRequest.getEmail() != null) intern.setEmail(internRequest.getEmail());
+        if (internRequest.getPhoneNumber() != null) intern.setPhoneNumber(internRequest.getPhoneNumber());
+        if (internRequest.getInternStatus() != null) intern.setInternStatus(internRequest.getInternStatus());
+        if (internRequest.getUpdateDate() != null) intern.setUpdateDate(internRequest.getUpdateDate());
 
         historyGeneratorService.forSave(HistoryResponse.builder()
-                        .message("Intern with name: " + intern.getFirstName() + "updated")
+                .message("Intern with name: " + intern.getFirstName() + "updated")
                 .build(), intern.getId());
 
         internRepository.save(intern);
@@ -124,7 +123,7 @@ public class InternServiceImpl implements InternService {
     }
 
     @Override
-    public List<InternResponse> getInternsByName(String name){
+    public List<InternResponse> getInternsByName(String name) {
         List<Intern> interns = internRepository.getInternsByFirstName(name);
         List<InternResponse> internResponses = new ArrayList<>();
 
@@ -139,12 +138,13 @@ public class InternServiceImpl implements InternService {
         return internResponses;
     }
 
-    public static List<Intern> sort(List<Intern> interns){
+    public static List<Intern> sort(List<Intern> interns) {
 
         return interns.stream()
                 .sorted((s1, s2) -> s1.getGroup().getName().compareTo(s2.getGroup().getName()))
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<InternResponse> findAllInternsSortedByGroupName() {
         List<Intern> interns = internRepository.findAll();
