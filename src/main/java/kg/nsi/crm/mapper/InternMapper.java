@@ -33,6 +33,7 @@ public class InternMapper {
 				.firstName(intern.getFirstName())
 				.lastName(intern.getLastName())
 				.email(intern.getEmail())
+				.balance(intern.getBalance())
 				.phoneNumber(intern.getPhoneNumber())
 				.internStatus(intern.getInternStatus())
 				.isPaidForFirstMonth(intern.getIsPaidForFirstMonth())

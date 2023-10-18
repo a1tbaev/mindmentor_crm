@@ -14,6 +14,5 @@ public record InterviewRequest(
         String endTime,
         String location,
         String description
-
 ) {
 }

@@ -28,6 +28,7 @@ public class InternDto{
     private String lastName;
 
     private String email;
+    private int balance;
 
     private String phoneNumber;
 
