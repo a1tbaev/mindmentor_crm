@@ -108,14 +108,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupDto> getAll(String groupStatus) {
+    public List<GroupDto> getAll() {
         List<Group> groups = groupRepository.findAll();
         List<GroupDto> groupDtos = new ArrayList<>();
 
         for(Group group: groups){
-            if (group.getGroupStatus().equals(GroupStatus.valueOf(groupStatus.toUpperCase()))){
             groupDtos.add(GroupMapper.toDto(group));
-            }
         }
         return groupDtos;
     }
