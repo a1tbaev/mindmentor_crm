@@ -22,7 +22,7 @@ public interface InternRepository extends JpaRepository<Intern, Long>{
 		   "FROM Intern i " +
 		   "LEFT JOIN i.group g " +
 		   "JOIN i.stack s " +
-		   "FULL JOIN i.mentor m")
+		   "JOIN i.mentor m")
 	List<InternResponse> getAll();
 
 
