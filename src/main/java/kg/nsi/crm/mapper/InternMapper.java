@@ -26,6 +26,13 @@ public class InternMapper {
 	}
 	
 	public static InternDto toEntity(Intern intern) {
+
+		String groupName;
+
+		if (intern.getGroup() == null){
+			groupName = null;
+		}else groupName = intern.getGroup().getName();
+
 		return InternDto.builder()
 				.id(intern.getId())
 				.creationDate(intern.getCreationDate())
@@ -40,7 +47,7 @@ public class InternMapper {
 				.isPaidForSecondMonth(intern.getIsPaidForSecondMonth())
 				.isPaidForThirdMonth(intern.getIsPaidForThirdMonth())
 				.stackName(intern.getStack().getName())
-				.groupName(intern.getGroup().getName())
+				.groupName(groupName)
 				.build();
 	}
 }

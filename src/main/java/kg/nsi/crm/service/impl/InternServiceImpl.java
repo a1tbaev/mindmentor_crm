@@ -71,7 +71,7 @@ public class InternServiceImpl implements InternService {
     @Override
     public InternDto getInternById(Long id) {
         Intern intern = internRepository.findById(id).orElseThrow();
-        paymentService.processPayment(intern);
+        if (intern.getGroup() != null) paymentService.processPayment(intern);
         return getInternEntityById(id);
     }
 
