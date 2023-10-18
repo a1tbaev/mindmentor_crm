@@ -117,7 +117,6 @@ public class InternServiceImpl implements InternService {
 
     @Override
     public InternDto getInternEntityById(Long id) {
-        System.out.println("inside getInternEntityById");
         return InternMapper.toEntity(internRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("Intern with id %s is not found!", id))));
     }

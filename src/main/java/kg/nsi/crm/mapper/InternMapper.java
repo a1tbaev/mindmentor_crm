@@ -39,6 +39,8 @@ public class InternMapper {
 				.isPaidForFirstMonth(intern.getIsPaidForFirstMonth())
 				.isPaidForSecondMonth(intern.getIsPaidForSecondMonth())
 				.isPaidForThirdMonth(intern.getIsPaidForThirdMonth())
+				.stackName(intern.getStack().getName())
+				.groupName(intern.getGroup().getName())
 				.build();
 	}
 }
