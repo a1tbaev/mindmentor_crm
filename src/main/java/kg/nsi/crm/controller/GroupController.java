@@ -49,8 +49,8 @@ public class  GroupController {
 															 "    ACTIVE,\n" +
 															 "    FINISHED")
 	@GetMapping("/")
-	public List<GroupDto> getAll(@RequestParam String groupStatus){
-		return groupService.getAll(groupStatus);
+	public List<GroupDto> getAll(){
+		return groupService.getAll();
 	}
 
 	@Operation(summary = "Get group's all the events", description = "Get group's all the events")

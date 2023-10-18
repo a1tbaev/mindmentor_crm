@@ -25,5 +25,5 @@ public interface InternRepository extends JpaRepository<Intern, Long>{
 		   "JOIN i.mentor m")
 	List<InternResponse> getAll();
 
-
+	boolean existsByEmail(String email);
 }
