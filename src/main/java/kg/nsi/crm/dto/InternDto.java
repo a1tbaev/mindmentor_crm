@@ -34,8 +34,8 @@ public class InternDto{
     private Boolean isPaidForFirstMonth;
     private Boolean isPaidForSecondMonth;
     private Boolean isPaidForThirdMonth;
-    private GroupDto groupDto;
-    private String stack;
+    private String groupName;
+    private String stackName;
 
     @Enumerated(EnumType.STRING)
     private InternStatus internStatus;

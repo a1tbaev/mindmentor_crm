@@ -39,11 +39,9 @@ public class InternServiceImpl implements InternService {
 
     final InternRepository internRepository;
     final MentorRepository mentorRepository;
-    final JdbcTemplate jdbcTemplate;
     final StackRepository stackRepository;
     final PaymentService paymentService;
     final HistoryGeneratorService historyGeneratorService;
-    final HistoryRepository historyRepository;
 
     @Override
     public SimpleResponse createIntern(InternRequest internRequest) {
@@ -118,7 +116,6 @@ public class InternServiceImpl implements InternService {
 
     @Override
     public InternDto getInternEntityById(Long id) {
-        System.out.println("inside getInternEntityById");
         return InternMapper.toEntity(internRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("Intern with id %s is not found!", id))));
     }
