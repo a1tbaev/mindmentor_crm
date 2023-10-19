@@ -17,7 +17,7 @@ public interface InternRepository extends JpaRepository<Intern, Long>{
 	Intern getInternByEmail(String email);
 	List<Intern> getInternsByFirstName(String name);
 	@Query("SELECT NEW kg.nsi.crm.dto.response.InternResponse(i.id, i.firstName, i.lastName, " +
-		   "(CASE WHEN i.group IS NULL THEN 'Not Assigned to Group' ELSE i.group.name END), " +
+		   "(CASE WHEN i.group IS NULL THEN 'Not Assigned' ELSE i.group.name END), " +
 		   "i.stack.name, i.internStatus, CONCAT(m.firstName, ' ', m.lastName)) " +
 		   "FROM Intern i " +
 		   "LEFT JOIN i.group g " +
