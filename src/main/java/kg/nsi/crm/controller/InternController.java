@@ -38,9 +38,9 @@ public class InternController {
     }
 
 	@Operation(summary = "Update intern information", description = "This method to update intern information")
-	@PutMapping("/")
-	public SimpleResponse updateInternInfo(@RequestBody InternDto intern){
-		return iServiceImpl.updateIntern(intern);
+	@PutMapping("/{id}")
+	public SimpleResponse updateInternInfo(@RequestBody InternRequest intern, @PathVariable Long id){
+		return iServiceImpl.updateIntern(intern, id);
 		 
 	}
 	@Operation(summary = "Delete intern by id", description = "This method to delete intern")

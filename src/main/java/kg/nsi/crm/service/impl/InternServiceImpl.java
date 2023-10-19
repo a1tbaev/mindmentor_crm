@@ -12,14 +12,12 @@ import kg.nsi.crm.entity.History;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
-import kg.nsi.crm.repository.HistoryRepository;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
 import kg.nsi.crm.service.HistoryGeneratorService;
 import kg.nsi.crm.service.PaymentService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import kg.nsi.crm.dto.InternDto;
 import kg.nsi.crm.entity.Intern;
@@ -91,15 +89,14 @@ public class InternServiceImpl implements InternService {
     }
 
     @Override
-    public SimpleResponse updateIntern(InternDto internRequest) {
-        Intern intern = this.internRepository.getInternById(internRequest.getId());
+    public SimpleResponse updateIntern(InternRequest internRequest, Long id) {
+        Intern intern = this.internRepository.getInternById(id);
 
-        if (internRequest.getFirstName() != null) intern.setFirstName(internRequest.getFirstName());
-        if (internRequest.getLastName() != null) intern.setLastName(internRequest.getLastName());
-        if (internRequest.getEmail() != null) intern.setEmail(internRequest.getEmail());
-        if (internRequest.getPhoneNumber() != null) intern.setPhoneNumber(internRequest.getPhoneNumber());
-        if (internRequest.getInternStatus() != null) intern.setInternStatus(internRequest.getInternStatus());
-        if (internRequest.getUpdateDate() != null) intern.setUpdateDate(internRequest.getUpdateDate());
+        if (internRequest.name() != null) intern.setFirstName(internRequest.name());
+        if (internRequest.surname() != null) intern.setLastName(internRequest.surname());
+        if (internRequest.email() != null) intern.setEmail(internRequest.email());
+        if (internRequest.phoneNumber() != null) intern.setPhoneNumber(internRequest.phoneNumber());
+        if (internRequest.internStatus() != null) intern.setInternStatus(internRequest.internStatus());
 
         historyGeneratorService.forSave(HistoryResponse.builder()
                 .message("Intern with name: " + intern.getFirstName() + "updated")
