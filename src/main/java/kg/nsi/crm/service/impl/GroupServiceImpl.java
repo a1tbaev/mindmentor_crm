@@ -3,11 +3,10 @@ package kg.nsi.crm.service.impl;
 import kg.nsi.crm.dto.GroupDto;
 import kg.nsi.crm.dto.request.GroupRequest;
 import kg.nsi.crm.dto.response.EventResponse;
-import kg.nsi.crm.dto.response.HistoryResponse;
+import kg.nsi.crm.dto.request.HistoryRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Event;
 import kg.nsi.crm.entity.Intern;
-import kg.nsi.crm.enums.GroupStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.mapper.EventMapper;
 import kg.nsi.crm.mapper.GroupMapper;
@@ -47,7 +46,7 @@ public class GroupServiceImpl implements GroupService {
 
         for (Intern intern : internList) {
             intern.setGroup(newGroup);
-            historyGeneratorService.forSave(new HistoryResponse("Intern has been added to group " + groupRequest.groupName()), intern.getId());
+            historyGeneratorService.forSave(new HistoryRequest("Intern has been added to group " + groupRequest.groupName()), intern.getId());
         }
 
         groupRepository.save(newGroup);

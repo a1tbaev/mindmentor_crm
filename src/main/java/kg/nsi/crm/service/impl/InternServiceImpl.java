@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
-import kg.nsi.crm.dto.response.HistoryResponse;
+import kg.nsi.crm.dto.request.HistoryRequest;
 import kg.nsi.crm.entity.History;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
@@ -55,7 +55,7 @@ public class InternServiceImpl implements InternService {
 
         // Make sure that internToSave is not null before trying to get its ID
         if (internToSave != null) {
-            historyGeneratorService.forSave(HistoryResponse.builder()
+            historyGeneratorService.forSave(HistoryRequest.builder()
                     .message("Intern has been registered")
                     .build(), internToSave.getId());
         } else {
@@ -98,7 +98,7 @@ public class InternServiceImpl implements InternService {
         if (internRequest.phoneNumber() != null) intern.setPhoneNumber(internRequest.phoneNumber());
         if (internRequest.internStatus() != null) intern.setInternStatus(internRequest.internStatus());
 
-        historyGeneratorService.forSave(HistoryResponse.builder()
+        historyGeneratorService.forSave(HistoryRequest.builder()
                 .message("Intern with name: " + intern.getFirstName() + "updated")
                 .build(), intern.getId());
 

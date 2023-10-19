@@ -2,7 +2,7 @@ package kg.nsi.crm.service.impl;
 
 import jakarta.transaction.Transactional;
 import kg.nsi.crm.dto.request.PaymentRequest;
-import kg.nsi.crm.dto.response.HistoryResponse;
+import kg.nsi.crm.dto.request.HistoryRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.repository.InternRepository;
@@ -51,7 +51,7 @@ public class PaymentServiceImpl implements PaymentService {
                 intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                 if (intern.getBalance() > 0){
                     intern.setIsPaidForFirstMonth(true);
-                    historyGeneratorService.forSave(HistoryResponse.builder()
+                    historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the first month")
                             .build(), intern.getId());
                 }
@@ -61,7 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
                 intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                 if (intern.getBalance() >= 0){
                     intern.setIsPaidForThirdMonth(true);
-                    historyGeneratorService.forSave(HistoryResponse.builder()
+                    historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the second month")
                             .build(), intern.getId());
                 }
@@ -71,7 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
                 intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                 if (intern.getBalance() >= 0){
                     intern.setIsPaidForSecondMonth(true);
-                    historyGeneratorService.forSave(HistoryResponse.builder()
+                    historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the third month")
                             .build(), intern.getId());
                 }
