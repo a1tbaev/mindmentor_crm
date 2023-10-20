@@ -59,6 +59,7 @@ public class VendorServiceImpl implements VendorService {
                 (resultset, i)
                         -> VendorResponse
                         .builder()
+                        .id(resultset.getLong("id"))
                         .name(resultset.getString("name"))
                         .img(resultset.getString("img"))
                         .address(resultset.getString("address"))
