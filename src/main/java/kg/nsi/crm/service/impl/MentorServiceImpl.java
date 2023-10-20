@@ -7,6 +7,7 @@ import kg.nsi.crm.dto.request.MentorUpdRequest;
 import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.ExtractedDataDto;
 import kg.nsi.crm.dto.response.MentorResponse;
+import kg.nsi.crm.dto.response.MentorResponse2;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
 import kg.nsi.crm.entity.Mentor;
@@ -166,6 +167,18 @@ public class MentorServiceImpl implements MentorService {
 
         for(Mentor mentor: mentors){
             mentorResponses.add(MentorMapper.toResponse(mentor));
+        }
+        return mentorResponses;
+    }
+
+
+    @Override
+    public List<MentorResponse2> findAll() {
+        List<Mentor> mentors = mentorRepository.findAll();
+        List<MentorResponse2> mentorResponses = new ArrayList<>();
+
+        for(Mentor mentor: mentors){
+            mentorResponses.add(MentorMapper.toResponse2(mentor));
         }
         return mentorResponses;
     }

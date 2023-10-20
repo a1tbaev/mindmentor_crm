@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.nsi.crm.dto.request.MentorRequest;
 import kg.nsi.crm.dto.request.MentorUpdRequest;
 import kg.nsi.crm.dto.response.MentorResponse;
+import kg.nsi.crm.dto.response.MentorResponse2;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.service.MentorService;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +65,11 @@ public class MentorController {
     @GetMapping("/getAll")
     public List<MentorResponse> getAll(){
         return mentorService.getAll();
+    }
+
+    @Operation(summary = "Get all the mentors (for editing page)", description = "This method is to get all the mentors (editing page)")
+    @GetMapping("/findAll")
+    public List<MentorResponse2> findAll(){
+        return mentorService.findAll();
     }
 }

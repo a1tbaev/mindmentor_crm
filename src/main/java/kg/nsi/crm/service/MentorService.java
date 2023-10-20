@@ -5,6 +5,7 @@ import kg.nsi.crm.dto.request.MentorUpdRequest;
 import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.ExtractedDataDto;
 import kg.nsi.crm.dto.response.MentorResponse;
+import kg.nsi.crm.dto.response.MentorResponse2;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,4 +20,5 @@ public interface MentorService {
     MentorResponse getMentor(Long mentorId);
 
     List<MentorResponse> getAll();
+    List<MentorResponse2> findAll();
 }
