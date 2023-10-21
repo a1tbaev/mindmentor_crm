@@ -73,5 +73,19 @@ VALUES (1, 'Чикаго, США', '+1 967 773 332 22', 'sucerberg@gmail.com', '
         'Tesla'),
        (3, 'Бишкек, Кыргызстан', '+9960455445', 'biz@gmail.com', 'image_biz',
         'BIZ - американская технологическая компания. Основана Кутманом и Адилом.', 'BIZ');
+insert into vacancy(id, release_day, requirements, vacancy_name, level, vendor_id)
+VALUES (1, '2023-02-01', 'Key Responsibilities: Design, develop, and maintain Java applications, ensuring high performance, responsiveness, and scalability. Collaborate with product managers, designers, and other developers to create efficient and user-friendly software solutions.Write clean, maintainable, and well-documented code, adhering to best practices and coding standards.',
+                                 'Java Developer', 'JUNIOR', 1),
+       (2, '2023-02-01', 'We are seeking a highly motivated and skilled JavaScript Developer to become an integral part of our development team at X Company. ' ||
+                                       'In this role, you''ll be responsible for creating dynamic, user-friendly web applications using JavaScript, and you''ll play a crucial' ||
+                                       ' role in ensuring our products are of the highest quality.', 'Java Script Developer', 'SENIOR', 2),
+       (3, '2023-02-01', 'We are in search of a highly skilled and motivated Python Developer to join our development team at X Company. As a Python Developer,' ||
+                                       ' you will play a pivotal role in designing,developing, and maintaining Python-based applications. Your work will be integral to the success of our projects,' ||
+                                       ' contributing to the continued innovation and growth of our products.', 'Python Developer', 'MIDDLE', 3);
+
+insert into event (id, description, date, meeting_name, start_time, end_time, group_id, location)
+VALUES (1, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting', '10:00', '12:00', 1, 'Bishkek'),
+       (2, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting', '10:00', '12:00', 2, 'Bishkek'),
+       (3, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting', '10:00', '12:00', 3, 'Bishkek');
 
 

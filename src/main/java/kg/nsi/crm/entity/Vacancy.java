@@ -32,7 +32,7 @@ public class Vacancy {
     @Enumerated(EnumType.STRING)
     DeveloperLevel level;
 
-    @Column(name = "requirements")
+    @Column(name = "requirements", length = 1000)
     String requirements;
 
     @ManyToOne

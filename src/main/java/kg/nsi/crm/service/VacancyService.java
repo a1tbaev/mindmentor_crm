@@ -12,4 +12,6 @@ public interface VacancyService {
     SimpleResponse saveVacancy(VacancyRequest request);
     ResponseVacancy getById(Long id);
     SimpleResponse deleteVacancy(Long id);
+
+    List<ResponseVacancy> getAllByVendorId(Long vendorId);
 }
