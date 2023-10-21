@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,5 +75,27 @@ public class VacancyServiceImpl implements VacancyService {
                 .httpStatus(HttpStatus.OK)
                 .message("The vacancy deleted successfully")
                 .build();
+    }
+
+    @Override
+    public List<ResponseVacancy> getAllByVendorId(Long vendorId) {
+        List<Vacancy> responseVacancies = vacancyRepository.findAllByVendorId(vendorId);
+        List<ResponseVacancy> vacancyResponses = new ArrayList<>();
+        if (responseVacancies.isEmpty()) {
+            throw new NotFoundException("Vacancy by vendor id " + vendorId + " not found!");
+        }
+
+        else{
+            for (Vacancy vacancy : responseVacancies) {
+                vacancyResponses.add(ResponseVacancy.builder()
+                        .vacancyName(vacancy.getVacancyName())
+                        .developerLevel(vacancy.getLevel().name())
+                        .requirement(vacancy.getRequirements())
+                        .date(vacancy.getReleaseDay())
+                        .build());
+            }
+            return vacancyResponses;
+        }
+
     }
 }
