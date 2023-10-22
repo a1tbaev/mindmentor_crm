@@ -7,10 +7,7 @@ import kg.nsi.crm.dto.request.InterviewRequest;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.service.InterviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,11 @@ public class InterviewController {
     @Operation(summary = "get all interviews", description = "This method to get all interview")
     public List<InterviewResponse> getAll(){
         return interviewService.getAll();
+    }
+
+    @DeleteMapping("/{interviewId}")
+    @Operation(summary = "delete interviews", description = "This method to delete")
+    public SimpleResponse delete(@PathVariable Long interviewId){
+        return interviewService.delete(interviewId);
     }
 }
