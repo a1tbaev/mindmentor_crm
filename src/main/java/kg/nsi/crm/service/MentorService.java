@@ -21,4 +21,5 @@ public interface MentorService {
 
     List<MentorResponse> getAll();
     List<MentorResponse2> findAll();
+    MentorResponse findByEmail(String email);
 }

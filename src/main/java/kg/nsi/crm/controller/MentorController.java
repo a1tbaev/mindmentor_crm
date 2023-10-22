@@ -72,4 +72,10 @@ public class MentorController {
     public List<MentorResponse2> findAll(){
         return mentorService.findAll();
     }
+
+    @GetMapping("/byEmail")
+    @Operation(summary = "Get mentor's info by email", description = "This method is to get a mentor by email!")
+    public MentorResponse findByEmail(@RequestParam String email) {
+        return mentorService.findByEmail(email);
+    }
 }

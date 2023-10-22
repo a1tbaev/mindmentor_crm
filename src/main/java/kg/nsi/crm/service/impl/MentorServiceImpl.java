@@ -4,7 +4,6 @@ import jakarta.transaction.Transactional;
 import kg.nsi.crm.dto.ExperienceDto;
 import kg.nsi.crm.dto.request.MentorRequest;
 import kg.nsi.crm.dto.request.MentorUpdRequest;
-import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.ExtractedDataDto;
 import kg.nsi.crm.dto.response.MentorResponse;
 import kg.nsi.crm.dto.response.MentorResponse2;
@@ -181,5 +180,12 @@ public class MentorServiceImpl implements MentorService {
             mentorResponses.add(MentorMapper.toResponse2(mentor));
         }
         return mentorResponses;
+    }
+
+    @Override
+    public MentorResponse findByEmail(String email) {
+        Mentor mentor = mentorRepository.findByEmail(email)
+                .orElseThrow(()-> new NotFoundException("mentor not found with email " + email));
+        return MentorMapper.toResponse(mentor);
     }
 }
