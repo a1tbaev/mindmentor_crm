@@ -3,6 +3,7 @@ package kg.nsi.crm.mapper;
 import kg.nsi.crm.dto.request.MentorRequest;
 import kg.nsi.crm.dto.request.UpdatedMentorRequest;
 import kg.nsi.crm.dto.response.MentorResponse;
+import kg.nsi.crm.dto.response.MentorResponse2;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
 import kg.nsi.crm.repository.MentorRepository;
@@ -57,4 +58,22 @@ public class MentorMapper {
     }
 
 
+    public static MentorResponse2 toResponse2(Mentor mentor) {
+        Set<Stack> stacks = mentor.getStacks();
+        List<String> stackNames = new ArrayList<>();
+
+        for(Stack stack: stacks){
+            stackNames.add(stack.getName());
+        }
+        return MentorResponse2.builder()
+                .id(mentor.getId())
+                .stackNames(stackNames)
+                .firstname(mentor.getFirstName())
+                .lastname(mentor.getLastName())
+                .email(mentor.getEmail())
+                .education(mentor.getEducation())
+                .experience(mentor.getExperience())
+                .isBillable(mentor.getIsBillable())
+                .build();
+    }
 }

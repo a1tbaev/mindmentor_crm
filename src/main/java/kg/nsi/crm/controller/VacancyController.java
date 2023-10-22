@@ -9,6 +9,8 @@ import kg.nsi.crm.service.VacancyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Vacancy",description = "The Vacancy API")
@@ -34,6 +36,11 @@ public class VacancyController {
         return vacancyService.getById(id);
     }
 
+    @GetMapping("/getAllByVendorId")
+    @Operation(summary = "Get all vacancy by vendor id", description = "Find all vacancy by vendor id!")
+    public List<ResponseVacancy> getAllByVendorId(@RequestParam Long vendorId){
+        return vacancyService.getAllByVendorId(vendorId);
+    }
 
 
 }

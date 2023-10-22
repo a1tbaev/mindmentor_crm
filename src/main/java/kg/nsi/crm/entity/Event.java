@@ -16,7 +16,9 @@ import java.time.LocalTime;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "event_gen", sequenceName = "event_seq",
+            allocationSize = 1, initialValue = 4)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_gen")
     Long id;
     String meetingName;
     String location;
