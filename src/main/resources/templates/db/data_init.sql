@@ -88,4 +88,13 @@ VALUES (1, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting',
        (2, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting', '10:00', '12:00', 2, 'Bishkek'),
        (3, 'This is a meeting for all interns', '2023-02-01', 'Interns Meeting', '10:00', '12:00', 3, 'Bishkek');
 
+insert into interview (id, name_of_interview, start_date, start_time, end_time, description, location)
+VALUES (1, 'Interview', '2023-02-01', '10:00', '12:00', 'This is an interview for all interns', 'Bishkek'),
+       (2, 'Interview', '2023-02-01', '10:00', '12:00', 'This is an interview for all interns', 'Bishkek'),
+       (3, 'Interview', '2023-02-01', '10:00', '12:00', 'This is an interview for all interns', 'Bishkek');
 
+
+insert into interview_interns (interview_id, interns_id)
+values (1, 100),
+       (2, 200),
+       (3, 300);
