@@ -47,6 +47,13 @@ public class MentorServiceImpl implements MentorService {
             }
         }
 
+        List<Mentor> mentors = mentorRepository.findAll();
+
+        for(Mentor mentor: mentors){
+            if(mentor.getEmail().equals(mentorRequest.getEmail())){
+                return new SimpleResponse("The mentor with this email already exists!", HttpStatus.BAD_REQUEST);
+            }
+        }
         ExtractedDataDto extractedDataDto =  pdfParserService.parse(file);
         System.out.println(extractedDataDto.getExperience());
 
