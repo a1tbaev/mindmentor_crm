@@ -4,6 +4,6 @@ import lombok.Builder;
 
 @Builder
 public record PaymentRequest(
-        Integer cash
+        String cash
 ) {
 }
