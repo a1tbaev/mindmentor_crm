@@ -25,7 +25,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final HistoryGeneratorServiceImpl historyGeneratorService;
 
     @Override
-    public SimpleResponse replenishment(PaymentRequest paymentRequest, Long internId) {
+    public SimpleResponse replenishment(String cash, Long internId) {
 //        Intern intern = internRepository.findById(internId).orElseThrow();
 //
 //        intern.setBalance(intern.getBalance() + Integer.parseInt(paymentRequest.cash()));
@@ -33,7 +33,7 @@ public class PaymentServiceImpl implements PaymentService {
 //        processPayment(intern);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message(paymentRequest.cash() + " " + internId)
+                .message(cash + " " + internId)
                 .build();
     }
 

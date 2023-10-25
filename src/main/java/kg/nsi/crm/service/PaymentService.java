@@ -5,6 +5,6 @@ import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.Intern;
 
 public interface PaymentService {
-    SimpleResponse replenishment(PaymentRequest paymentRequest, Long internId);
+    SimpleResponse replenishment(String cash, Long internId);
     void processPayment(Intern intern);
 }
