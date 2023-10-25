@@ -26,14 +26,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public SimpleResponse replenishment(PaymentRequest paymentRequest, Long internId) {
-        Intern intern = internRepository.findById(internId).orElseThrow();
-
-        intern.setBalance(intern.getBalance() + Integer.parseInt(paymentRequest.cash()));
-
-        processPayment(intern);
+//        Intern intern = internRepository.findById(internId).orElseThrow();
+//
+//        intern.setBalance(intern.getBalance() + Integer.parseInt(paymentRequest.cash()));
+//
+//        processPayment(intern);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
-                .message("The payment was successful!!")
+                .message(paymentRequest.cash() + " " + internId)
                 .build();
     }
 
