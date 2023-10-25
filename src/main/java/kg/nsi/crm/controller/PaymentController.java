@@ -14,8 +14,8 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/{internId}")
-    public SimpleResponse replenishment(@RequestParam String cash, @PathVariable Long internId){
-        return paymentService.replenishment(cash, internId);
+    public SimpleResponse replenishment(@RequestBody PaymentRequest paymentRequest, @PathVariable Long internId){
+        return paymentService.replenishment(paymentRequest, internId);
     }
 
 }
