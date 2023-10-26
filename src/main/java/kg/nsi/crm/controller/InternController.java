@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.nsi.crm.dto.request.InternRequest;
 import kg.nsi.crm.dto.response.InternResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
+import kg.nsi.crm.enums.InternStatus;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +51,7 @@ public class InternController {
 		 
 	}
 	@GetMapping("/getAll")
-	@Operation(summary = "Get all intern", description = "This method to get all intern")
+	@Operation(summary = "Get all the interns", description = "This method to get all the interns")
 	public List<InternResponse> getAll(@RequestParam(required = false, defaultValue = "0") int page,
 									   @RequestParam(required = false, defaultValue = "10") int size){
 		return iServiceImpl.getAll(PageRequest.of(page, size));
@@ -62,10 +63,10 @@ public class InternController {
 		return iServiceImpl.getInternsByName(name);
 	}
 
-	@GetMapping("/getAllSortedByGroup")
-	@Operation(summary = "Get all interns sorted by group", description = "This method is to get all interns sorted by group")
-	public List<InternResponse> findAllInternsSortedByGroup(){
-		return iServiceImpl.findAllInternsSortedByGroupName();
+	@GetMapping("/sortByStatus")
+	@Operation(summary = "Get all interns sorted by status", description = "This method is to get all interns sorted by status")
+	List<InternResponse> getInternsByStatus(@RequestParam InternStatus status){
+		return iServiceImpl.getInternsByStatus(status);
 	}
 
 

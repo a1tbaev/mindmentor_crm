@@ -11,6 +11,7 @@ import kg.nsi.crm.dto.request.HistoryRequest;
 import kg.nsi.crm.entity.History;
 import kg.nsi.crm.entity.Mentor;
 import kg.nsi.crm.entity.Stack;
+import kg.nsi.crm.enums.InternStatus;
 import kg.nsi.crm.exception.exceptions.NotFoundException;
 import kg.nsi.crm.repository.MentorRepository;
 import kg.nsi.crm.repository.StackRepository;
@@ -134,29 +135,29 @@ public class InternServiceImpl implements InternService {
         return internResponses;
     }
 
-    public static List<Intern> sort(List<Intern> interns) {
-
-        return interns.stream()
-                .sorted((s1, s2) -> s1.getGroup().getName().compareTo(s2.getGroup().getName()))
-                .collect(Collectors.toList());
-    }
-
     @Override
-    public List<InternResponse> findAllInternsSortedByGroupName() {
+    public List<InternResponse> getInternsByStatus(InternStatus status) {
         List<Intern> interns = internRepository.findAll();
         List<InternResponse> internResponses = new ArrayList<>();
-
-        for (Intern intern : sort(interns)) {
-            InternResponse internResponse = new InternResponse();
-            internResponse.setId(intern.getId());
-            internResponse.setFirstName(intern.getFirstName());
-            internResponse.setLastName(intern.getLastName());
-            internResponse.setStackName(intern.getStack().getName());
-            internResponse.setGroupName(intern.getGroup().getName());
-            internResponse.setMentorName(intern.getMentor().getFirstName() + " " + intern.getMentor().getLastName());
-            internResponse.setInternStatus(intern.getInternStatus());
-            internResponses.add(internResponse);
+        for(Intern intern : interns){
+            if(intern.getInternStatus().equals(status)){
+                InternResponse internResponse = new InternResponse();
+                internResponse.setId(intern.getId());
+                internResponse.setFirstName(intern.getFirstName());
+                internResponse.setLastName(intern.getLastName());
+                internResponse.setStackName(intern.getStack().getName());
+                internResponse.setInternStatus(intern.getInternStatus());
+                internResponse.setMentorName(intern.getMentor().getFirstName());
+                internResponse.setGroupName(intern.getGroup().getName());
+                internResponses.add(internResponse);
+            }
         }
+
+
         return internResponses;
     }
+
+
+
+
 }
