@@ -27,11 +27,11 @@ public class InternMapper {
 	
 	public static InternDto toEntity(Intern intern) {
 
-		String groupName;
+		String groupName = null;
+		String mentorName = null;
 
-		if (intern.getGroup() == null){
-			groupName = null;
-		}else groupName = intern.getGroup().getName();
+		if (intern.getGroup() != null) groupName = intern.getGroup().getName();
+		if (intern.getMentor().getFirstName() != null) mentorName = intern.getMentor().getFirstName();
 
 		return InternDto.builder()
 				.id(intern.getId())
@@ -48,6 +48,7 @@ public class InternMapper {
 				.isPaidForThirdMonth(intern.getIsPaidForThirdMonth())
 				.stackName(intern.getStack().getName())
 				.groupName(groupName)
+				.mentorName(mentorName)
 				.build();
 	}
 }

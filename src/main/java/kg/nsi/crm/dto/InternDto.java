@@ -37,6 +37,7 @@ public class InternDto{
     private Boolean isPaidForThirdMonth;
     private String groupName;
     private String stackName;
+    private String mentorName;
 
     @Enumerated(EnumType.STRING)
     private InternStatus internStatus;
