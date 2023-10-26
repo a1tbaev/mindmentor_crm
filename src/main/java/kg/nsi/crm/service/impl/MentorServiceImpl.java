@@ -56,7 +56,7 @@ public class MentorServiceImpl implements MentorService {
                 set.add(stackRepository.getById(id));
             }
         }
-
+        
 
         String education = "";
         if(extractedDataDto.getEducation() != null) {

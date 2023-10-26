@@ -28,7 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
     public SimpleResponse replenishment(PaymentRequest paymentRequest, Long internId) {
         Intern intern = internRepository.findById(internId).orElseThrow();
 
-        intern.setBalance(intern.getBalance() + paymentRequest.cash());
+        intern.setBalance(intern.getBalance() + Integer.parseInt(paymentRequest.cash()));
 
         processPayment(intern);
         return SimpleResponse.builder()
