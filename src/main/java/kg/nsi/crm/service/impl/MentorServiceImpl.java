@@ -36,8 +36,9 @@ public class MentorServiceImpl implements MentorService {
     private final PdfParserService pdfParserService;
 
     @Override //save button
-    public SimpleResponse saveExtractedDataFromCv(@NotNull MentorRequest mentorRequest, MultipartFile file) {
-
+    public SimpleResponse saveExtractedDataFromCv(
+            @NotNull MentorRequest mentorRequest,
+            MultipartFile file) {
         List<Mentor> mentors = mentorRepository.findAll();
 
         for(Mentor mentor: mentors){
