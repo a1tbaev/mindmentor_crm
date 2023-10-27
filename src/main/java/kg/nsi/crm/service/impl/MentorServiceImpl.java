@@ -146,12 +146,13 @@ public class MentorServiceImpl implements MentorService {
         if(newMentor.getEducation() != null) oldMentor.setEducation(newMentor.getEducation());
 
         if(newMentor.getSkills() != null) oldMentor.setSkills(newMentor.getSkills());
+        if(newMentor.getPhoneNumber() != null) oldMentor.setPhoneNumber(newMentor.getPhoneNumber());
 
-        if(newMentor.getStackIds() != null)
+        if(newMentor.getStackNames() != null)
         {
             HashSet<Stack> set = new HashSet<>();
-            for(Long stackId: newMentor.getStackIds()){
-                set.add(stackRepository.getById(stackId));
+            for(String stackName: newMentor.getStackNames()){
+                set.add(stackRepository.getByName(stackName));
             }
             oldMentor.setStacks(set);
         }
