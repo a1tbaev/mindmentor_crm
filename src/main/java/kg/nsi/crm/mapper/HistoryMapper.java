@@ -18,7 +18,6 @@ public class HistoryMapper {
 
         return HistoryResponse
                 .builder()
-                .fullName(history.getIntern().getLastName() + " " + history.getIntern().getFirstName())
                 .date(history.getDate())
                 .message(history.getMessage())
                 .build();

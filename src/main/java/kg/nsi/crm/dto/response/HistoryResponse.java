@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 @Builder
 public record HistoryResponse(
-        String fullName,
         String message,
         LocalDate date
 ) {

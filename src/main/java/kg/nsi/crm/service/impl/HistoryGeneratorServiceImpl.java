@@ -1,6 +1,7 @@
 package kg.nsi.crm.service.impl;
 
 import kg.nsi.crm.dto.request.HistoryRequest;
+import kg.nsi.crm.dto.response.HistoryOwnerNameResponse;
 import kg.nsi.crm.dto.response.HistoryResponse;
 import kg.nsi.crm.dto.response.SimpleResponse;
 import kg.nsi.crm.entity.History;
@@ -55,12 +56,17 @@ public class HistoryGeneratorServiceImpl implements HistoryGeneratorService {
     }
 
     @Override
-    public List<HistoryResponse> getAllInternsHistory(Long internId) {
+    public HistoryOwnerNameResponse getAllInternsHistory(Long internId) {
         List<History> histories = historyRepository.findAllByInternId(internId);
         List<HistoryResponse> historyResponses = new ArrayList<>();
+        String fullName = null;
         for (History history : histories) {
             historyResponses.add(HistoryMapper.toDto(history));
+            fullName = history.getIntern().getLastName() + " " + history.getIntern().getFirstName();
         }
-        return historyResponses;
+        return HistoryOwnerNameResponse.builder()
+                .fullName(fullName)
+                .historyResponses(historyResponses)
+                .build();
     }
 }
