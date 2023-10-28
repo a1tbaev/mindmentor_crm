@@ -16,6 +16,7 @@ public class MentorUpdRequest {
     String skills;
     String education;
     String experience;
+    String phoneNumber;
     boolean isBillable;
-    List<Long> stackIds;
+    List<String> stackNames;
 }
