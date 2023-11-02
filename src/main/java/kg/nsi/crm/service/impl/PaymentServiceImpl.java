@@ -48,8 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
 
         if (currentDate.isBefore(nextMonthStartDate)) {
             if (!intern.getIsPaidForFirstMonth()) {
-                intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
-                if (intern.getBalance() > 0){
+                if (intern.getBalance() >= intern.getPaymentCoastPerMonth()){
+                    intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                     intern.setIsPaidForFirstMonth(true);
                     historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the first month")
@@ -58,8 +58,8 @@ public class PaymentServiceImpl implements PaymentService {
             }
         } else if (nextMonthStartDate.isAfter(currentDate) && nextMonthStartDate.isBefore(finishDate)) {
             if (!intern.getIsPaidForThirdMonth()) {
-                intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
-                if (intern.getBalance() >= 0){
+                if (intern.getBalance() >= intern.getPaymentCoastPerMonth()){
+                    intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                     intern.setIsPaidForThirdMonth(true);
                     historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the second month")
@@ -68,8 +68,8 @@ public class PaymentServiceImpl implements PaymentService {
             }
         } else {
             if (!intern.getIsPaidForSecondMonth()) {
-                intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
-                if (intern.getBalance() >= 0){
+                if (intern.getBalance() >= intern.getPaymentCoastPerMonth()){
+                    intern.setBalance(intern.getBalance() - intern.getPaymentCoastPerMonth());
                     intern.setIsPaidForSecondMonth(true);
                     historyGeneratorService.forSave(HistoryRequest.builder()
                             .message("Status changed from unpaid to paid for the third month")
@@ -78,5 +78,4 @@ public class PaymentServiceImpl implements PaymentService {
             }
         }
     }
-
 }
