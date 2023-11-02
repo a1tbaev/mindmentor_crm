@@ -148,7 +148,10 @@ public class InternServiceImpl implements InternService {
                 internResponse.setStackName(intern.getStack().getName());
                 internResponse.setInternStatus(intern.getInternStatus());
                 internResponse.setMentorName(intern.getMentor().getFirstName());
-                internResponse.setGroupName(intern.getGroup().getName());
+                if(intern.getGroup() != null) internResponse.setGroupName(intern.getGroup().getName());
+                else{
+                    internResponse.setGroupName("Not Assigned Yet");
+                }
                 internResponses.add(internResponse);
             }
         }
